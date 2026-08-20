@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lincoln Moki — Backend &amp; AI Engineer</title>
+<meta name="description" content="Backend &amp; AI Engineer based in Nairobi, Kenya. I build backend systems that stay correct when everything else goes wrong.">
+
+<!-- Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --color-navy: #0F172A;
+    --color-black: #111827;
+    --color-white: #F8FAFC;
+    --color-blue: #2563EB;
+
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Reset & Base Rules */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Accessibility Focus & Skip Link */
+:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 4px;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: 0.75rem 1.25rem;
+    z-index: 1000;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top 0.2s ease;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.skip-link:focus {
+    top: 1rem;
+}
+
+/* Layout Container */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Persistent Header & Navigation */
+header {
+    position: sticky;
+    top: 0;
+    background-color: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+    z-index: 500;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+
+.brand-logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 0.5rem 0.85rem;
+    text-decoration: none;
+    font-size: 1.125rem;
+    letter-spacing: -0.05em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 48px;
+}
+
+nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav a {
+    color: var(--color-black);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s ease;
+}
+
+nav a:hover, nav a.active {
+    color: var(--color-blue);
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--color-black);
+    line-height: 1.25;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: rgba(17, 24, 39, 0.9);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+code, .code-token {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: rgba(15, 23, 42, 0.06);
+    color: var(--color-navy);
+    padding: 0.15em 0.4em;
+    border-radius: 2px;
+}
+
+/* Hero Section */
+.hero {
+    padding: 5rem 0 4rem 0;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 868px) {
+    .hero-grid {
+    grid-template-columns: 1.8fr 1fr;
+    align-items: start;
+    }
+}
+
+.hero-subhead {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-blue);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+}
+
+.hero-subline {
+    font-size: 1.15rem;
+    color: rgba(17, 24, 39, 0.85);
+    margin-bottom: 2rem;
+    max-width: 680px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    min-height: 48px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-blue);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-black);
+    border-color: rgba(15, 23, 42, 0.2);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-navy);
+    background-color: rgba(15, 23, 42, 0.04);
+}
+
+/* Hero Proof Strip */
+.proof-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.proof-item strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    color: var(--color-navy);
+    line-height: 1.1;
+}
+
+.proof-item span {
+    font-size: 0.85rem;
+    color: rgba(17, 24, 39, 0.75);
+}
+
+/* Hero Sidebar Card */
+.hero-card {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 1.75rem;
+    border-left: 4px solid var(--color-blue);
+}
+
+.hero-card h3 {
+    color: var(--color-white);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(248, 250, 252, 0.15);
+    padding-bottom: 0.5rem;
+}
+
+.hero-card p {
+    color: rgba(248, 250, 252, 0.85);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Section Styling */
+section {
+    padding: 5rem 0;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-tag {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    letter-spacing: -0.02em;
+}
+
+/* Case Study Card UI */
+.case-study-card {
+    background: var(--color-white);
+    border: 1px solid rgba(15, 23, 42, 0.15);
+    border-left: 4px solid var(--color-navy);
+    padding: 2.25rem;
+    margin-bottom: 3rem;
+    transition: border-left-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.case-study-card:hover {
+    border-left-color: var(--color-blue);
+    box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08);
+}
+
+.case-study-card.lab-card {
+    border-left-style: dashed;
+}
+
+.case-study-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.case-study-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.65rem;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+}
+
+.status-badge.ongoing {
+    background-color: transparent;
+    color: var(--color-navy);
+    border: 1px solid var(--color-navy);
+}
+
+.status-badge.lab {
+    background-color: rgba(15, 23, 42, 0.1);
+    color: var(--color-navy);
+}
+
+.case-study-title {
+    font-size: 1.6rem;
+    margin-top: 0.25rem;
+}
+
+.case-study-sub {
+    font-size: 0.95rem;
+    color: rgba(17, 24, 39, 0.75);
+}
+
+/* System Spec Grid */
+.system-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.spec-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+    font-family: var(--font-heading);
+}
+
+.spec-value {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-white);
+}
+
+/* Asymmetric 2-Column Body */
+.case-study-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-top: 1.75rem;
+}
+
+@media (min-width: 868px) {
+    .case-study-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    }
+}
+
+.cs-section {
+    margin-bottom: 1.5rem;
+}
+
+.cs-section-title {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-navy);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.12);
+    padding-bottom: 0.35rem;
+    margin-bottom: 0.65rem;
+}
+
+/* Reliability Mandatory Callout */
+.reliability-block {
+    background-color: rgba(15, 23, 42, 0.03);
+    border-left: 3px solid var(--color-navy);
+    padding: 1rem 1.15rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.reliability-block p {
+    font-size: 0.925rem;
+}
+
+/* Tech Pills Footer */
+.case-study-footer {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(15, 23, 42, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tech-pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.tech-pill {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.55rem;
+    background: rgba(15, 23, 42, 0.06);
+    color: var(--color-black);
+}
+
+.case-study-link {
+    color: var(--color-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 48px;
+}
+
+.case-study-link:hover {
+    text-decoration: underline;
+}
+
+/* SVG Sequence Diagram Guard Wrapper */
+.diagram-scroll-wrapper {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    background-color: var(--color-navy);
+    padding: 1.25rem;
+    border: 1px solid rgba(15, 23, 42, 0.2);
+}
+
+.diagram-inner {
+    min-width: 480px;
+}
+
+.diagram-label {
+    color: var(--color-white);
+    font-size: 0.75rem;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    opacity: 0.85;
+}
+
+/* About Section */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 868px) {
+    .about-grid {
+    grid-template-columns: 1.8fr 1fr;
+    }
+}
+
+.about-text p {
+    font-size: 1.05rem;
+    margin-bottom: 1.25rem;
+}
+
+.tech-stack-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tech-stack-list li {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 0.4rem 0.75rem;
+}
+
+/* Contact Section */
+.contact-card {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.contact-card h2 {
+    color: var(--color-white);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-card p {
+    color: rgba(248, 250, 252, 0.85);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.contact-btn {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    padding: 0.85rem 1.75rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.contact-btn:hover {
+    opacity: 0.95;
+}
+
+.contact-link-out {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(248, 250, 252, 0.3);
+}
+
+.contact-link-out:hover {
+    border-color: var(--color-white);
+}
+
+.copy-feedback {
+    font-size: 0.85rem;
+    color: #34D399;
+    margin-top: 0.75rem;
+    min-height: 1.25rem;
+    font-family: var(--font-mono);
+}
+
+/* Footer */
+footer {
+    padding: 2.5rem 0;
+    background-color: var(--color-white);
+    font-size: 0.875rem;
+    color: rgba(17, 24, 39, 0.7);
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Header & Nav -->
+<header>
+<div class="container nav-container">
+    <a href="#home" class="brand-logo" aria-label="Lincoln Moki Home">LM</a>
+    <nav aria-label="Primary Navigation">
+    <a href="#home">Home</a>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    </nav>
+</div>
+</header>
+
+<main id="main-content">
+
+<!-- HERO SECTION -->
+<section id="home" class="hero">
+    <div class="container">
+    <div class="hero-grid">
+        <div>
+        <span class="hero-subhead">Backend &amp; AI Engineer · Nairobi, Kenya</span>
+        <h1>I build backend systems that stay correct when everything else goes wrong.</h1>
+        <p class="hero-subline">I work across APIs, data flows, failure handling, and deployment boundaries—where correctness depends on more than the happy path.</p>
+        
+        <div class="hero-actions">
+            <a href="#work" class="btn btn-primary">Read the engineering work ↓</a>
+            <button id="copy-email-btn" class="btn btn-secondary" type="button">Copy Email</button>
+        </div>
+
+        <div class="proof-strip">
+            <div class="proof-item">
+            <strong>10</strong>
+            <span>Retail businesses supported by CPOS</span>
+            </div>
+            <div class="proof-item">
+            <strong>25%</strong>
+            <span>Faster transaction processing (CV-confirmed)</span>
+            </div>
+            <div class="proof-item">
+            <strong>6+</strong>
+            <span>Delivered apps &amp; microservices</span>
+            </div>
+        </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Current Role Profile">
+        <h3>Current Profile</h3>
+        <p><strong>Role:</strong> Backend AI Engineer Intern at FlyRank AI</p>
+        <p><strong>Foundation:</strong> Python backends, PostgreSQL, APIs, containers</p>
+        <p><strong>Focus:</strong> Correctness under failure and changing state</p>
+        </aside>
+    </div>
+    </div>
+</section>
+
+<!-- WORK SECTION -->
+<section id="work">
+    <div class="container">
+    <div class="section-header">
+        <span class="section-tag">01 / Work</span>
+        <h2 class="section-title">Systems, failure modes, and decisions between them.</h2>
+    </div>
+
+    <!-- 1. CPOS SYSTEM -->
+    <article class="case-study-card" id="cpos-system">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Production Work</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 01</span>
+        </div>
+        <h3 class="case-study-title">CPOS System</h3>
+        <p class="case-study-sub">Lancola Ltd · Software Engineer Intern · Eldoret · May–August 2024</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Target Environment</span>
+            <span class="spec-value">10 Retail Businesses</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Core Metric</span>
+            <span class="spec-value">25% Faster Transaction Processing</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Primary Constraint</span>
+            <span class="spec-value">Data Consistency at Checkout Boundary</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>A retail point-of-sale system used across 10 operational businesses, where transaction latency and dependable day-to-day operations directly affected checkout workflows.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Improve transaction processing speed without weakening the strict consistency expectations required for system financial and inventory state.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>Retail transactions require predictable state changes. The implementation work explicitly accounted for malformed input, incomplete payloads, and preventing ambiguous transaction state across system boundaries.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>Performance work in operational software is only useful when the accelerated execution path remains fully understandable, testable, and safe for the data it mutates.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>Backend modifications supporting the core transaction processing workflow and application execution paths utilized by participating retail merchants.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Kept the transaction execution path linear and explicit. Treated payload validation as an architectural contract at the service boundary rather than an interface-only concern.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Supported 10 retail businesses and achieved 25% faster transaction processing speed based on CV-confirmed operational metrics.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">REST APIs</span>
+        </div>
+        <a href="https://github.com/RonnyLincoln" target="_blank" rel="noopener noreferrer" class="case-study-link">View on GitHub ↗</a>
+        </div>
+    </article>
+
+    <!-- 2. E-COMMERCE STATE SYNCHRONIZATION -->
+    <article class="case-study-card" id="e-commerce-state-sync">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Failure Analysis</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 02</span>
+        </div>
+        <h3 class="case-study-title">E-commerce State Synchronization</h3>
+        <p class="case-study-sub">Request-ordering defect analysis and algorithmic correction</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Defect Type</span>
+            <span class="spec-value">Out-of-Order Network Responses</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Guarding Mechanism</span>
+            <span class="spec-value">Request Authority Sequence Guard</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Primary Constraint</span>
+            <span class="spec-value">Client State Mutation Integrity</span>
+        </div>
+        </div>
+
+        <!-- Embedded SVG Diagram Container -->
+        <div class="diagram-scroll-wrapper">
+        <div class="diagram-inner">
+            <p class="diagram-label">Sequence Model: Before vs After State Mutation Guard</p>
+            <svg viewBox="0 0 540 100" style="width: 100%; height: auto; display: block;" aria-label="Sequence diagram showing out-of-order response handling">
+            <rect width="540" height="100" fill="#0F172A"/>
+            <!-- Before -->
+            <text x="15" y="25" fill="#F8FAFC" font-size="11" font-family="monospace" font-weight="bold">BEFORE:</text>
+            <text x="80" y="25" fill="#F8FAFC" font-size="10" font-family="monospace">Req #1 (t=1) ─────────────────► [Arrives Late] ──► Overwrites State (BUG)</text>
+            <text x="80" y="42" fill="#F8FAFC" font-size="10" font-family="monospace">Req #2 (t=2) ────────► [Arrives First] ───────────► Overwritten</text>
+            <!-- After -->
+            <text x="15" y="70" fill="#2563EB" font-size="11" font-family="monospace" font-weight="bold">AFTER:</text>
+            <text x="80" y="70" fill="#F8FAFC" font-size="10" font-family="monospace">Req #1 (t=1) ─────────────────► [Guard Evaluation] ──► REJECTED (Stale)</text>
+            <text x="80" y="87" fill="#F8FAFC" font-size="10" font-family="monospace">Req #2 (t=2) ────────► [Arrives First] ─────────────► COMMITTED (Latest)</text>
+            </svg>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>An e-commerce client interface issued overlapping asynchronous requests while rapid user actions continued, creating multiple valid HTTP responses in flight simultaneously.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Network responses did not consistently return in request sequence. A delayed, older response could overwrite newer, authoritative client application state.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>The fix treats unpredictable network timing as normal runtime behavior. Delayed HTTP responses remain valid transport events but are no longer permitted to execute state transitions.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>Asynchronous correctness requires an explicit definition of which operation owns the right to commit state—not an assumption that completion sequence mirrors user intent.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>A request-ordering guard mechanism that evaluates response freshness against sequence counters before allowing state updates.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Separated network response arrival from state mutation authority. State commits depend strictly on whether a response represents the latest accepted client request sequence.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Corrected the request-ordering defect so older network responses can no longer corrupt current client state. Quantitative impact to be added once measured in production logs.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">REST APIs</span>
+            <span class="tech-pill">Client State</span>
+        </div>
+        <a href="https://github.com/RonnyLincoln" target="_blank" rel="noopener noreferrer" class="case-study-link">View on GitHub ↗</a>
+        </div>
+    </article>
+
+    <!-- 3. FREELANCE SOFTWARE ENGINEERING -->
+    <article class="case-study-card" id="freelance-work">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Client Delivery</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 03</span>
+        </div>
+        <h3 class="case-study-title">Freelance Software Engineering</h3>
+        <p class="case-study-sub">Self-employed · December 2024–June 2026</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Scope</span>
+            <span class="spec-value">6+ Delivered Apps &amp; Microservices</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Core Stack</span>
+            <span class="spec-value">Django, FastAPI, PostgreSQL, Docker</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Operational Boundary</span>
+            <span class="spec-value">API Contracts &amp; Containerization</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>Independent technical delivery of 6+ applications and microservices spanning backend APIs, relational persistence, and containerized deployment setups.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Convert varied client requirements into maintainable service boundaries while keeping scope, data schema behavior, and deployment assumptions explicit.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>Defined strict validation and error handling behavior at API boundaries, separated environment configuration from codebase logic, and treated database migrations as critical operational deployment steps.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>Small services still require clear API contracts. Ambiguous validation and hidden configuration dependencies become operational reliability problems very quickly.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>Backend microservices and application features using Django and FastAPI, supported by PostgreSQL databases and Docker-based packaging.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Selected framework structures according to specific service needs, modeled relational schemas in PostgreSQL, and utilized containers to ensure repeatable runtime environments.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Delivered 6+ operational services. Individual per-project telemetry and measurements to be added once verified from production logs.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">Django</span>
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Docker</span>
+        </div>
+        <a href="https://github.com/RonnyLincoln" target="_blank" rel="noopener noreferrer" class="case-study-link">View on GitHub ↗</a>
+        </div>
+    </article>
+
+    <!-- 4. RESILIENT DATA INGESTION PIPELINE -->
+    <article class="case-study-card" id="polite-scraper">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Ingestion Engine</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 04</span>
+        </div>
+        <h3 class="case-study-title">Resilient Data Ingestion Pipeline (The Polite Scraper)</h3>
+        <p class="case-study-sub">Fault-tolerant ETL web pipeline · Independent supporting project</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Cache Strategy</span>
+            <span class="spec-value">SHA-256 Content-Addressable Local Cache</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Throttling Rules</span>
+            <span class="spec-value">0.6s Rate Limit / 5s Network Timeout</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Validation Engine</span>
+            <span class="spec-value">Pydantic Schema &amp; ISO-8601 UTC Time</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>A fault-tolerant web crawler built in Python to extract, clean, and structure catalog data from SSR HTML sources without triggering server rate limits.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Prevent duplicate remote HTTP requests on pipeline re-runs while strictly adhering to site crawling ethics and enforcing data validity at the ingestion boundary.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>Defensive rate-limiting protects host infrastructure. Local cache hits bypass remote network calls entirely (proven by execution report metrics: 63/63 cache hits on re-runs).</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>Data pipelines must treat untrusted external inputs with strict validation. Cleaning prices to numerical <code class="code-token">float</code> and standardizing timestamps must occur before persistence.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>A Python ingestion pipeline featuring SHA-256 content-addressable HTML caching, 0.6s request delay throttles, 5s timeouts, and Pydantic schema validation.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Selected server-side HTML parsing over headless browsers (Selenium/Playwright) to eliminate CPU/memory overhead. Standardized clean outputs (<code class="code-token">price_gbp</code>, ISO-8601 UTC timestamps).</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Processed 60 records across 3 catalogue pages in 2.82 seconds with 100% cache hit efficiency on execution verification runs.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">BeautifulSoup4</span>
+            <span class="tech-pill">Pydantic</span>
+            <span class="tech-pill">Requests</span>
+        </div>
+        <a href="https://github.com/LincolnMoki/The-polite-scraper.git" target="_blank" rel="noopener noreferrer" class="case-study-link">View Code Repository ↗</a>
+        </div>
+    </article>
+
+    <!-- 5. CONTAINERIZED & AUTHENTICATED TASK SERVICE -->
+    <article class="case-study-card" id="crud-auth-api">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Secure REST API</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 05</span>
+        </div>
+        <h3 class="case-study-title">Containerized &amp; Authenticated Task Service</h3>
+        <p class="case-study-sub">Multi-tier service evolution · In-Memory → SQLite → Dockerized Postgres &amp; JWT Auth</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Auth Provider</span>
+            <span class="spec-value">Supabase JWT / Bearer Tokens</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Deployment Boundary</span>
+            <span class="spec-value">Docker Compose Orchestration</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Error Domain</span>
+            <span class="spec-value">Explicit HTTP Codes (401, 404, 422)</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>A multi-tier backend REST API evolution scaling from in-memory and SQLite storage to production-grade PostgreSQL with token-based access control.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Enforce strict user session boundaries and repeatable deployment runtimes without compromising API contract predictability.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>Pre-business-logic schema validation rejects malformed input. Explicit edge behavior returns <code class="code-token">401 Unauthorized</code> for invalid tokens and <code class="code-token">404 Not Found</code> for missing resources.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>An API is easier to operate when its error domain and session revocation lifecycles receive the same design discipline as its successful execution paths.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>A Dockerized FastAPI application integrated with Supabase JWT authentication, Bearer token authorization, protected profile endpoints, and PostgreSQL persistence.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Decoupled configuration via environment variables, containerized PostgreSQL with Docker Compose, and implemented explicit logout revocation routes (<code class="code-token">POST /auth/logout</code>).</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Established a repeatable containerized deployment stack with verified authentication workflows and zero database setup overhead.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Supabase JWT</span>
+            <span class="tech-pill">Docker Compose</span>
+        </div>
+        <a href="https://github.com/LincolnMoki/CRUD-API.git" target="_blank" rel="noopener noreferrer" class="case-study-link">View Code Repository ↗</a>
+        </div>
+    </article>
+
+    <!-- 6. COMMERCIAL CLIENT DELIVERY (PRINCETON DENTAL) -->
+    <article class="case-study-card" id="princeton-dental">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge">Production Client Site</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 06</span>
+        </div>
+        <h3 class="case-study-title">Princeton Dental &amp; Implant Centre</h3>
+        <p class="case-study-sub">Commercial medical practice platform · Production delivery</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Domain</span>
+            <span class="spec-value">princetondentalandimplantcenter.com</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Core Workflow</span>
+            <span class="spec-value">Patient Acquisition &amp; Booking Pipeline</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Engineering Focus</span>
+            <span class="spec-value">Input Validation &amp; Payload Delivery</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>Production web platform built for Princeton Dental &amp; Implant Centre to manage clinical service presentation and patient acquisition workflows.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Deliver a high-uptime client platform with strict form input validation to prevent invalid appointment booking payloads or silent communication drops.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>Form submission paths enforce boundary validation before invoking transport endpoints, ensuring appointment request records arrive formatted and complete.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>Client-facing software reliability depends on predictable form input handling—silent failures in booking interfaces directly compromise operational trust.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>A responsive production web application handling client interaction, dental service indexing, and integrated appointment request channels.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Engineered form payloads to pass client validation rules prior to dispatching to backend processing endpoints, keeping dependencies light and fast.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Deployed live client site supporting commercial practice operations and patient inquiry generation.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">REST APIs</span>
+            <span class="tech-pill">HTML/CSS</span>
+        </div>
+        <a href="https://princetondentalandimplantcenter.com/" target="_blank" rel="noopener noreferrer" class="case-study-link">Visit Live Production Site ↗</a>
+        </div>
+    </article>
+
+    <!-- 7. LAB: AI-GENERATED SNAKE GAME -->
+    <article class="case-study-card lab-card" id="snake-game-lab">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge lab">Lab / Rapid Prototyping</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Case Study 07</span>
+        </div>
+        <h3 class="case-study-title">AI-Generated Snake Game</h3>
+        <p class="case-study-sub">LLM code generation capability &amp; state loop evaluation study</p>
+        </div>
+
+        <div class="system-spec-grid">
+        <div class="spec-item">
+            <span class="spec-label">Experiment Type</span>
+            <span class="spec-value">LLM Vibe Coding &amp; Rapid Prototyping</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Evaluation Subject</span>
+            <span class="spec-value">State Machine &amp; Frame Loop Generation</span>
+        </div>
+        <div class="spec-item">
+            <span class="spec-label">Live Deployment</span>
+            <span class="spec-value">snakedg.netlify.app</span>
+        </div>
+        </div>
+
+        <div class="case-study-body">
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">01. Context</h4>
+            <p>An experimental side project built using pure AI code generation to evaluate the capabilities and state-management limits of modern LLMs.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">02. Engineering Challenge</h4>
+            <p>Identify exact failure modes where generated code fails to maintain deterministic state in self-contained rendering loops.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">05. Reliability Considerations</h4>
+            <div class="reliability-block">
+                <p>State machines generated by LLMs tend to fail at boundary conditions (e.g., collision race conditions). Manual inspection was required to enforce frame timing and grid limits.</p>
+            </div>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">07. Lessons Learned</h4>
+            <p>AI generation excels at rapid boilerplate creation, but software engineers remain essential for verifying state boundary correctness and edge-case execution.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">03. What I Built</h4>
+            <p>A browser-based Canvas game generated via structured AI prompting, featuring collision checks, score state handlers, and rendering loops.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">04. Technical Decisions</h4>
+            <p>Constrained prompt instructions to vanilla JavaScript and HTML5 Canvas to keep runtime execution isolated from external library dependencies.</p>
+            </div>
+            <div class="cs-section">
+            <h4 class="cs-section-title">06. Outcome</h4>
+            <p>Successfully deployed functional game prototype while isolating specific failure behaviors in LLM logic synthesis.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="case-study-footer">
+        <div class="tech-pill-group">
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">Canvas API</span>
+            <span class="tech-pill">LLM Prompting</span>
+        </div>
+        <a href="https://snakedg.netlify.app/" target="_blank" rel="noopener noreferrer" class="case-study-link">Launch Demo App ↗</a>
+        </div>
+    </article>
+
+    <!-- ONGOING ROLE: FLYRANK AI -->
+    <article class="case-study-card" id="flyrank-role">
+        <div class="case-study-header">
+        <div class="case-study-meta-top">
+            <span class="status-badge ongoing">Active Internship</span>
+            <span style="font-family: var(--font-mono); font-size: 0.85rem;">Ongoing Role</span>
+        </div>
+        <h3 class="case-study-title">Backend AI Engineer Intern</h3>
+        <p class="case-study-sub">FlyRank AI · June 2026–Present</p>
+        </div>
+
+        <div style="background-color: rgba(15, 23, 42, 0.03); border-left: 3px solid var(--color-navy); padding: 1.25rem; margin-top: 1rem;">
+        <p style="font-weight: 600; color: var(--color-navy); margin-bottom: 0.5rem;">Current Role — Work in Progress</p>
+        <p>Active engineering internship focused on backend systems and AI integrations. Detailed technical decisions, architecture choices, and verified outcomes will be documented once work is completed and supported by verifiable production evidence.</p>
+        </div>
+    </article>
+
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about">
+    <div class="container">
+    <div class="section-header">
+        <span class="section-tag">02 / About</span>
+        <h2 class="section-title">Correctness is an implementation detail—and an operating principle.</h2>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-text">
+        <p>I am a Backend and AI Engineer based in Nairobi, Kenya. My engineering work centers on APIs, relational data architecture, service behavior, and the precise points where asynchronous operations or external dependencies threaten system correctness.</p>
+        
+        <p>I build backends using Python frameworks including FastAPI, Django, and Flask, with PostgreSQL for relational persistence and Docker for repeatable runtime packaging. My broader engineering foundation spans REST API design, Kubernetes, React, Java, and JavaScript.</p>
+
+        <p>I hold the <strong>Kubernetes and Cloud Native Associate (KCNA)</strong> certification. The value is not the badge itself, but the rigorous vocabulary it provides for reasoning about workloads, declarative configuration, service boundaries, and operational state in cloud environments.</p>
+
+        <p>I am drawn to audit-conscious and regulated environments because they make engineering assumptions visible: who changed what state, which system is authoritative, how failures are captured, and whether historical system behavior can be reconstructed. I do not claim unearned domain expertise in those fields; I am building the technical discipline required to contribute responsibly within them.</p>
+        </div>
+
+        <div>
+        <div class="hero-card">
+            <h3>Technical Foundation</h3>
+            <ul class="tech-stack-list">
+            <li>Python</li>
+            <li>FastAPI</li>
+            <li>Django</li>
+            <li>Flask</li>
+            <li>PostgreSQL</li>
+            <li>REST APIs</li>
+            <li>Docker</li>
+            <li>Kubernetes</li>
+            <li>KCNA Certified</li>
+            <li>React</li>
+            <li>Java</li>
+            <li>JavaScript</li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact">
+    <div class="container">
+    <div class="contact-card">
+        <span class="section-tag" style="color: #60A5FA;">03 / Contact</span>
+        <h2>Have a backend problem with real failure modes?</h2>
+        <p>Send the context, constraints, and current failure behavior. I prefer a concrete technical problem over a vague project brief.</p>
+
+        <div class="contact-links">
+        <a href="mailto:mwithiamoki@gmail.com" class="contact-btn">mwithiamoki@gmail.com</a>
+        <a href="https://github.com/RonnyLincoln" target="_blank" rel="noopener noreferrer" class="contact-link-out">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/lincoln-moki" target="_blank" rel="noopener noreferrer" class="contact-link-out">LinkedIn ↗</a>
+        </div>
+
+        <div id="copy-feedback" class="copy-feedback" aria-live="polite"></div>
+    </div>
+    </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+<div class="container footer-flex">
+    <p>© 2026 Lincoln Moki. All rights reserved.</p>
+    <p>Single-file static HTML, CSS &amp; vanilla JS. Zero build step.</p>
+</div>
+</footer>
+
+<!-- VANILLA SCRIPT ENGINE -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Email Clipboard copy script
+    const emailBtn = document.getElementById('copy-email-btn');
+    const feedback = document.getElementById('copy-feedback');
+    const email = 'mwithiamoki@gmail.com';
+
+    if (emailBtn) {
+    emailBtn.addEventListener('click', async () => {
+        try {
+        await navigator.clipboard.writeText(email);
+        if (feedback) feedback.textContent = 'Email copied to clipboard.';
+        emailBtn.textContent = 'Copied!';
+        setTimeout(() => {
+            if (feedback) feedback.textContent = '';
+            emailBtn.textContent = 'Copy Email';
+        }, 3000);
+        } catch (err) {
+        if (feedback) feedback.textContent = 'mwithiamoki@gmail.com';
+        }
+    });
+    }
+
+    // Intersection Observer for active navigation links
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -60% 0px',
+    threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+            } else {
+            link.classList.remove('active');
+            }
+        });
+        }
+    });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+});
+</script>
+</body>
+</html>
