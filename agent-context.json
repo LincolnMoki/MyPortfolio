@@ -1,0 +1,191 @@
+{
+"developer_profile": {
+"name": "Lincoln Moki",
+"role": "Backend & AI Engineer",
+"location": "Nairobi, Kenya",
+"core_claim": "I build backend systems that stay correct when everything else goes wrong.",
+"contact": {
+    "email": "mwithiamoki@gmail.com",
+    "github": "https://github.com/RonnyLincoln",
+    "linkedin": "https://www.linkedin.com/in/lincoln-moki",
+    "portfolio_site": "https://lincolnmoki.netlify.app/"
+},
+"certifications": [
+    {
+    "name": "Kubernetes and Cloud Native Associate (KCNA)",
+    "issuer": "Cloud Native Computing Foundation (CNCF)",
+    "focus": "Cloud-native architecture, declarative configuration, container orchestration, and runtime workload management."
+    }
+]
+},
+"technical_toolkit": {
+"languages": ["Python", "Java", "JavaScript", "SQL"],
+"backend_frameworks": ["FastAPI", "Django", "Flask"],
+"databases_persistence": ["PostgreSQL", "SQLite", "Pydantic Schema Validation"],
+"infrastructure_devops": ["Docker", "Docker Compose", "Kubernetes", "AWS", "GitHub Actions"],
+"apis_auth": ["REST APIs", "Supabase JWT", "Bearer Tokens", "OAuth2 flows"]
+},
+"case_studies": [
+{
+    "id": "cpos-system",
+    "title": "CPOS System",
+    "type": "Production Work",
+    "role": "Software Engineer Intern",
+    "organization": "Lancola Ltd",
+    "location": "Eldoret, Kenya",
+    "period": "May 2024 – August 2024",
+    "stack": ["Python", "PostgreSQL", "REST APIs"],
+    "specifications": {
+    "target_environment": "10 Retail Businesses",
+    "verified_metrics": "25% faster transaction processing (CV-confirmed)",
+    "primary_constraint": "Data consistency at checkout boundary"
+    },
+    "details": {
+    "context": "Retail point-of-sale system serving 10 active businesses where transaction latency and operational stability impacted checkout workflows.",
+    "engineering_challenge": "Accelerate transaction processing speed without compromising financial or inventory data consistency.",
+    "what_i_built": "Backend enhancements for core transaction execution and business logic routines utilized by retail merchants.",
+    "technical_decisions": "Maintained linear, explicit execution paths and treated input validation as an architectural contract at service boundaries.",
+    "reliability_considerations": "Handled malformed payloads, incomplete inputs, and race conditions to prevent ambiguous financial states.",
+    "outcome": "Supported 10 retail businesses with 25% faster confirmed transaction processing speed.",
+    "lessons_learned": "Performance optimizations are only viable if the underlying execution path remains deterministic and testable."
+    }
+},
+{
+    "id": "e-commerce-state-sync",
+    "title": "E-commerce State Synchronization",
+    "type": "Failure Analysis",
+    "role": "Independent Engineer",
+    "stack": ["JavaScript", "REST APIs", "Client State"],
+    "specifications": {
+    "defect_type": "Out-of-order asynchronous network responses",
+    "guarding_mechanism": "Request Authority Sequence Guard",
+    "primary_constraint": "Client state mutation integrity"
+    },
+    "details": {
+    "context": "E-commerce client issuing rapid concurrent HTTP requests during active user UI interaction.",
+    "engineering_challenge": "Out-of-order network responses arriving late caused older data to overwrite newer client state.",
+    "what_i_built": "A request-ordering guard evaluating response freshness against sequential request counters before state mutations commit.",
+    "technical_decisions": "Decoupled network arrival timing from state mutation authority. Requests out of order are rejected as stale.",
+    "reliability_considerations": "Network delays are treated as expected runtime events rather than unexpected system errors.",
+    "outcome": "Eliminated state corruption caused by race conditions. Quantitative metrics pending production log evaluation.",
+    "lessons_learned": "Asynchronous state correctness requires an explicit sequence authority rather than assuming response order mirrors user intent."
+    }
+},
+{
+    "id": "freelance-software-engineering",
+    "title": "Freelance Software Engineering",
+    "type": "Client Delivery",
+    "role": "Self-Employed",
+    "period": "December 2024 – June 2026",
+    "stack": ["Django", "FastAPI", "PostgreSQL", "Docker"],
+    "specifications": {
+    "scope": "6+ Delivered Applications & Microservices",
+    "operational_boundary": "API Contracts & Containerized Runtimes"
+    },
+    "details": {
+    "context": "Independent technical delivery of multiple client services across APIs, relational storage, and containerized deployments.",
+    "engineering_challenge": "Translate varied business requirements into maintainable backend service boundaries with predictable data contracts.",
+    "what_i_built": "Backend microservices, relational database schemas, and REST endpoints using Django, FastAPI, and PostgreSQL.",
+    "technical_decisions": "Applied strict schema boundary checks, separated environment configs, and containerized runtime environments with Docker.",
+    "reliability_considerations": "Enforced error validation at API entry points and managed relational database migrations as critical deployment operations.",
+    "outcome": "Successfully delivered 6+ production apps and microservices to client specifications.",
+    "lessons_learned": "Even small services require strict API contracts to prevent operational failures when dependencies evolve."
+    }
+},
+{
+    "id": "polite-scraper",
+    "title": "Resilient Data Ingestion Pipeline (The Polite Scraper)",
+    "type": "Ingestion Engine",
+    "repository": "https://github.com/LincolnMoki/The-polite-scraper.git",
+    "stack": ["Python", "BeautifulSoup4", "Pydantic", "Requests"],
+    "specifications": {
+    "cache_strategy": "SHA-256 Content-Addressable Local Cache",
+    "throttling_rules": "0.6s Request Delay / 5s Network Timeout",
+    "validation_engine": "Pydantic Schema & ISO-8601 UTC Time"
+    },
+    "details": {
+    "context": "Fault-tolerant web crawler built to extract, clean, and structure catalog data from HTML sources without overloading remote hosts.",
+    "engineering_challenge": "Prevent duplicate network requests on pipeline re-runs while enforcing strict rate limits and output schema validity.",
+    "what_i_built": "An ETL pipeline featuring local SHA-256 caching, automated request delays, network timeout bounds, and Pydantic validation.",
+    "technical_decisions": "Used lightweight HTML parsing over resource-heavy browser automation; standardized prices to float and timestamps to ISO-8601 UTC.",
+    "reliability_considerations": "Cache hits bypass remote network calls completely (63/63 cache hits verified on re-execution runs).",
+    "outcome": "Processed 60 records across 3 pages in 2.82s with 100% cache efficiency on re-runs.",
+    "lessons_learned": "External HTTP sources must be treated as untrusted; data cleaning and typing must occur immediately at the boundary."
+    }
+},
+{
+    "id": "crud-auth-api",
+    "title": "Containerized & Authenticated Task Service",
+    "type": "Secure REST API",
+    "repository": "https://github.com/LincolnMoki/CRUD-API.git",
+    "stack": ["FastAPI", "PostgreSQL", "Supabase JWT", "Docker Compose"],
+    "specifications": {
+    "auth_provider": "Supabase JWT / Bearer Token Authorization",
+    "deployment_boundary": "Docker Compose Multi-Container Orchestration",
+    "error_domain": "Explicit HTTP Status Codes (401, 404, 422)"
+    },
+    "details": {
+    "context": "Multi-tier REST API evolution migrating from in-memory/SQLite prototypes to production PostgreSQL with JWT security.",
+    "engineering_challenge": "Enforce strict session isolation and reproducible local-to-production deployment runtimes.",
+    "what_i_built": "FastAPI service with Supabase JWT validation, Bearer token session guards, explicit logout routes, and multi-container Docker environments.",
+    "technical_decisions": "Decoupled configuration into environment variables and orchestrated API and database tiers via Docker Compose.",
+    "reliability_considerations": "Pre-logic Pydantic validation blocks malformed inputs; edge errors explicitly return 401 Unauthorized or 404 Not Found.",
+    "outcome": "Built a production-ready containerized service stack with zero-friction onboarding and verified auth flows.",
+    "lessons_learned": "Session revocation and error domains require the same engineering rigor as successful execution routes."
+    }
+},
+{
+    "id": "princeton-dental",
+    "title": "Princeton Dental & Implant Centre",
+    "type": "Production Client Site",
+    "live_url": "https://princetondentalandimplantcenter.com/",
+    "stack": ["JavaScript", "REST APIs", "HTML/CSS"],
+    "specifications": {
+    "domain": "princetondentalandimplantcenter.com",
+    "core_workflow": "Patient Acquisition & Booking Pipeline",
+    "engineering_focus": "Input Validation & Payload Delivery"
+    },
+    "details": {
+    "context": "Production web platform built for a medical facility to present dental services and capture patient inquiries.",
+    "engineering_challenge": "Maintain high site uptime and validate appointment form payloads to prevent lost or malformed customer submissions.",
+    "what_i_built": "Responsive commercial web interface integrated with client-side form payload validation and booking endpoints.",
+    "technical_decisions": "Sanitized form payloads before submission dispatch, maintaining a lightweight dependency footprint.",
+    "reliability_considerations": "Form boundaries enforce complete data inputs to guarantee booking notifications arrive correctly formatted.",
+    "outcome": "Deployed live site actively supporting client acquisition and commercial healthcare operations.",
+    "lessons_learned": "Client-facing software reliability depends directly on predictable form submission logic."
+    }
+},
+{
+    "id": "snake-game-lab",
+    "title": "AI-Generated Snake Game",
+    "type": "Lab / Rapid Prototyping",
+    "live_url": "https://snakedg.netlify.app/",
+    "stack": ["JavaScript", "Canvas API", "LLM Prompting"],
+    "specifications": {
+    "experiment_type": "LLM Vibe Coding & Code Generation Benchmarking",
+    "evaluation_subject": "State Machine & Frame Render Loop Reliability"
+    },
+    "details": {
+    "context": "Experimental side project generated entirely via targeted LLM prompts to test state management capabilities of modern AI models.",
+    "engineering_challenge": "Identify exact boundary conditions where LLM-generated code breaks in state-machine render loops.",
+    "what_i_built": "Browser Canvas game with collision detection, score state evaluation, and asynchronous game ticks generated via structured prompts.",
+    "technical_decisions": "Constrained generated outputs to vanilla JavaScript and HTML5 Canvas with zero external frameworks.",
+    "reliability_considerations": "State bounds required manual review to prevent frame collision race conditions and tick timing drift.",
+    "outcome": "Deployed operational game prototype while establishing clear failure-mode profiles for LLM code synthesis.",
+    "lessons_learned": "AI tools generate rapid structural boilerplate, but human engineers remain necessary to enforce strict state invariants."
+    }
+},
+{
+    "id": "flyrank-role",
+    "title": "Backend AI Engineer Intern",
+    "type": "Active Internship",
+    "organization": "FlyRank AI",
+    "period": "June 2026 – Present",
+    "status": "ONGOING",
+    "details": {
+    "context": "Active backend engineering role focusing on AI integrations and backend service workflows.",
+    "note": "Work is ongoing. Metrics and architectural breakdowns will be documented upon project conclusion."
+    }
+}
+]
+}
