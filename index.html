@@ -1588,6 +1588,7 @@ const isHidden = drawer.style.display === 'none' || drawer.style.display === '';
 drawer.style.display = isHidden ? 'flex' : 'none';
 }
 
+
 async function handleAgentSubmit(e) {
 e.preventDefault();
 const input = document.getElementById('agent-input');
@@ -1596,7 +1597,6 @@ const userQuery = input.value.trim();
 
 if (!userQuery) return;
 
-// Append User Message
 const userMsg = document.createElement('div');
 userMsg.className = 'message user';
 userMsg.textContent = userQuery;
@@ -1605,29 +1605,36 @@ messages.appendChild(userMsg);
 input.value = '';
 messages.scrollTop = messages.scrollHeight;
 
-// Placeholder response for client-side evaluation
 const agentMsg = document.createElement('div');
 agentMsg.className = 'message agent';
-agentMsg.textContent = 'Thinking...';
+agentMsg.textContent = '...';
 messages.appendChild(agentMsg);
 messages.scrollTop = messages.scrollHeight;
 
-// Make request to Vercel backend proxy
 try {
-const res = await fetch('https://my-portfolio-git-master-lincoln13.vercel.app/api/chat', {
+const res = await fetch('https://my-portfolio-lincoln13.vercel.app/api/chat', {
     method: 'POST',
-    headers: {
-    'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: userQuery })
 });
 
-const data = await res.json();
+if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-if (res.ok && data.response) {
-    agentMsg.textContent = data.response;
-} else {
-    agentMsg.textContent = data.error || "Sorry, I couldn't process your request right now.";
+const reader = res.body.getReader();
+const decoder = new TextDecoder();
+let firstChunk = true;
+
+while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    const chunkText = decoder.decode(value, { stream: true });
+    if (firstChunk) {
+    agentMsg.textContent = ''; // Clear placeholder
+    firstChunk = false;
+    }
+    agentMsg.textContent += chunkText;
+    messages.scrollTop = messages.scrollHeight;
 }
 } catch (error) {
 console.error("Chat error:", error);
