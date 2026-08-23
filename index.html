@@ -1405,180 +1405,180 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- Floating AI Representative Chat Drawer -->
 <style>
-  #agent-widget-button {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background-color: #0f172a;
-    color: #f8fafc;
-    border: 1px solid #334155;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 9999;
-    transition: transform 0.2s, background-color 0.2s;
-  }
+#agent-widget-button {
+position: fixed;
+bottom: 24px;
+right: 24px;
+background-color: #0f172a;
+color: #f8fafc;
+border: 1px solid #334155;
+padding: 12px 18px;
+border-radius: 30px;
+font-family: system-ui, -apple-system, sans-serif;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+display: flex;
+align-items: center;
+gap: 8px;
+z-index: 9999;
+transition: transform 0.2s, background-color 0.2s;
+}
 
-  #agent-widget-button:hover {
-    background-color: #1e293b;
-    transform: translateY(-2px);
-  }
+#agent-widget-button:hover {
+background-color: #1e293b;
+transform: translateY(-2px);
+}
 
-  #agent-drawer {
-    position: fixed;
-    bottom: 80px;
-    right: 24px;
-    width: 360px;
-    max-width: calc(100vw - 48px);
-    height: 480px;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-    display: none;
-    flex-direction: column;
-    z-index: 9999;
-    overflow: hidden;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
+#agent-drawer {
+position: fixed;
+bottom: 80px;
+right: 24px;
+width: 360px;
+max-width: calc(100vw - 48px);
+height: 480px;
+background-color: #0f172a;
+border: 1px solid #334155;
+border-radius: 12px;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+display: none;
+flex-direction: column;
+z-index: 9999;
+overflow: hidden;
+font-family: system-ui, -apple-system, sans-serif;
+}
 
-  .agent-header {
-    background-color: #1e293b;
-    padding: 14px 16px;
-    border-bottom: 1px solid #334155;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.agent-header {
+background-color: #1e293b;
+padding: 14px 16px;
+border-bottom: 1px solid #334155;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
 
-  .agent-header h3 {
-    margin: 0;
-    font-size: 14px;
-    color: #f8fafc;
-    font-weight: 600;
-  }
+.agent-header h3 {
+margin: 0;
+font-size: 14px;
+color: #f8fafc;
+font-weight: 600;
+}
 
-  .agent-header p {
-    margin: 2px 0 0 0;
-    font-size: 11px;
-    color: #94a3b8;
-  }
+.agent-header p {
+margin: 2px 0 0 0;
+font-size: 11px;
+color: #94a3b8;
+}
 
-  .agent-close {
-    background: none;
-    border: none;
-    color: #94a3b8;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0 4px;
-  }
+.agent-close {
+background: none;
+border: none;
+color: #94a3b8;
+font-size: 18px;
+cursor: pointer;
+padding: 0 4px;
+}
 
-  .agent-close:hover {
-    color: #f8fafc;
-  }
+.agent-close:hover {
+color: #f8fafc;
+}
 
-  .agent-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background-color: #0b1120;
-  }
+.agent-messages {
+flex: 1;
+padding: 16px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 12px;
+background-color: #0b1120;
+}
 
-  .message {
-    max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.4;
-  }
+.message {
+max-width: 85%;
+padding: 10px 14px;
+border-radius: 8px;
+font-size: 13px;
+line-height: 1.4;
+}
 
-  .message.agent {
-    background-color: #1e293b;
-    color: #e2e8f0;
-    align-self: flex-start;
-    border-bottom-left-radius: 2px;
-  }
+.message.agent {
+background-color: #1e293b;
+color: #e2e8f0;
+align-self: flex-start;
+border-bottom-left-radius: 2px;
+}
 
-  .message.user {
-    background-color: #2563eb;
-    color: #ffffff;
-    align-self: flex-end;
-    border-bottom-right-radius: 2px;
-  }
+.message.user {
+background-color: #2563eb;
+color: #ffffff;
+align-self: flex-end;
+border-bottom-right-radius: 2px;
+}
 
-  .agent-input-container {
-    padding: 12px;
-    background-color: #1e293b;
-    border-top: 1px solid #334155;
-    display: flex;
-    gap: 8px;
-  }
+.agent-input-container {
+padding: 12px;
+background-color: #1e293b;
+border-top: 1px solid #334155;
+display: flex;
+gap: 8px;
+}
 
-  .agent-input-container input {
-    flex: 1;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    color: #f8fafc;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    outline: none;
-  }
+.agent-input-container input {
+flex: 1;
+background-color: #0f172a;
+border: 1px solid #334155;
+color: #f8fafc;
+padding: 8px 12px;
+border-radius: 6px;
+font-size: 13px;
+outline: none;
+}
 
-  .agent-input-container input:focus {
-    border-color: #2563eb;
-  }
+.agent-input-container input:focus {
+border-color: #2563eb;
+}
 
-  .agent-input-container button {
-    background-color: #2563eb;
-    color: #ffffff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-  }
+.agent-input-container button {
+background-color: #2563eb;
+color: #ffffff;
+border: none;
+padding: 8px 14px;
+border-radius: 6px;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+}
 
-  .agent-input-container button:hover {
-    background-color: #1d4ed8;
-  }
+.agent-input-container button:hover {
+background-color: #1d4ed8;
+}
 </style>
 
 <button id="agent-widget-button" onclick="toggleAgentDrawer()">
-  <span>🤖</span>
-  <span>Chat with AI Rep</span>
+<span>🤖</span>
+<span>Chat with AI Rep</span>
 </button>
 
 <div id="agent-drawer">
-  <div class="agent-header">
-    <div>
-      <h3>Lincoln's AI Representative</h3>
-      <p>Grounded on verified engineering case studies</p>
-    </div>
-    <button class="agent-close" onclick="toggleAgentDrawer()">&times;</button>
-  </div>
+<div class="agent-header">
+<div>
+    <h3>Lincoln's AI Representative</h3>
+    <p>Grounded on verified engineering case studies</p>
+</div>
+<button class="agent-close" onclick="toggleAgentDrawer()">&times;</button>
+</div>
 
-  <div class="agent-messages" id="agent-messages">
-    <div class="message agent">
-      Hello! I'm Lincoln's AI representative. Ask me about his backend architecture, tech stack, or case studies.
-    </div>
-  </div>
+<div class="agent-messages" id="agent-messages">
+<div class="message agent">
+    Hello! I'm Lincoln's AI representative. Ask me about his backend architecture, tech stack, or case studies.
+</div>
+</div>
 
-  <form class="agent-input-container" onsubmit="handleAgentSubmit(event)">
-    <input type="text" id="agent-input" placeholder="Ask a question..." autocomplete="off" required />
-    <button type="submit">Send</button>
-  </form>
+<form class="agent-input-container" onsubmit="handleAgentSubmit(event)">
+<input type="text" id="agent-input" placeholder="Ask a question..." autocomplete="off" required />
+<button type="submit">Send</button>
+</form>
 </div>
 
 <script>
@@ -1612,11 +1612,29 @@ agentMsg.textContent = 'Thinking...';
 messages.appendChild(agentMsg);
 messages.scrollTop = messages.scrollHeight;
 
-// Connect this fetch call to your serverless endpoint/proxy when live
-setTimeout(() => {
-    agentMsg.textContent = "I am currently running in client preview mode. Connect my JS fetch endpoint to a serverless proxy running agent.py logic to stream production responses.";
-    messages.scrollTop = messages.scrollHeight;
-}, 1000);
+// Make request to Vercel backend proxy
+try {
+const res = await fetch('https://YOUR-VERCEL-APP-NAME.vercel.app/api/chat', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: userQuery })
+});
+
+const data = await res.json();
+
+if (res.ok && data.response) {
+    agentMsg.textContent = data.response;
+} else {
+    agentMsg.textContent = data.error || "Sorry, I couldn't process your request right now.";
+}
+} catch (error) {
+console.error("Chat error:", error);
+agentMsg.textContent = "Connection error. Please try reaching out directly at mwithiamoki@gmail.com.";
+} finally {
+messages.scrollTop = messages.scrollHeight;
+}
 }
 </script>
 </body>
