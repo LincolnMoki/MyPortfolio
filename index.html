@@ -1459,6 +1459,18 @@ justify-content: space-between;
 align-items: center;
 }
 
+/* Force consistent text and bold colors inside agent messages */
+.message.agent,
+.message.agent p,
+.message.agent li,
+.message.agent span {
+  color: #cbd5e1 !important; /* Soft, readable light blue-gray */
+}
+
+.message.agent strong,
+.message.agent b {
+  color: #38bdf8 !important; /* Vibrant cyan for bold headers & highlights */
+}
 .agent-header h3 {
 margin: 0;
 font-size: 14px;
@@ -1469,14 +1481,13 @@ font-weight: 600;
 .agent-header p {
 margin: 2px 0 0 0;
 font-size: 11px;
-color: #e2e8f0;
-
+color: #94a3b8;
 }
 
 .agent-close {
 background: none;
 border: none;
-color: #e2e8f0;
+color: #94a3b8;
 font-size: 18px;
 cursor: pointer;
 padding: 0 4px;
@@ -1505,6 +1516,7 @@ font-size: 13px;
 line-height: 1.5;
 word-break: break-word;
 white-space: pre-wrap; /* Preserves natural spacing and line breaks */
+color: #e2e8f0;
 }
 
 .message.agent {
