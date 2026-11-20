@@ -1,709 +1,853 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lincoln Moki — Backend & AI Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="Lincoln Moki — Backend AI Engineering building reliable backend systems and grounded AI applications.">
+<title>Lincoln Moki — Backend AI Engineering</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 :root{
---navy:#0F172A;
---text:#111827;
---bg:#F8FAFC;
---surface:#FFFFFF;
---accent:#2563EB;
---line: rgba(17,24,39,0.10);
---muted: rgba(17,24,39,0.64);
---nav-bg: rgba(248,250,252,0.92);
---hero-overlay-opacity:0.55;
---hero-overlay-blend:multiply;
+--bg:#0b1020;
+--bg2:#10182b;
+--panel:#121d33;
+--panel2:#16233b;
+--text:#f3f6fc;
+--muted:#a3b0c5;
+--soft:#71819b;
+--line:rgba(178,199,230,.14);
+--blue:#60a5fa;
+--blue2:#2563eb;
+--lime:#b7f36b;
+--cyan:#67e8f9;
+--max:1160px;
+--radius:20px;
+--shadow:0 24px 80px rgba(0,0,0,.28);
 }
-body.dark{
---navy:#F8FAFC;
---text:#F8FAFC;
---bg:#020617;
---surface:#0F172A;
---accent:#60A5FA;
---line: rgba(248,250,252,0.12);
---muted: rgba(248,250,252,0.72);
---nav-bg: rgba(2,6,23,0.92);
---hero-overlay-opacity:0.18;
---hero-overlay-blend:normal;
-}
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-@media (prefers-reduced-motion: reduce){
-html{scroll-behavior:auto;}
-*{transition-duration:0.01ms !important;}
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
 body{
 margin:0;
-background:var(--bg);
+background:
+radial-gradient(ellipse at 80% 0%,rgba(37,99,235,.16),transparent 34%),
+radial-gradient(ellipse at 5% 35%,rgba(103,232,249,.07),transparent 26%),
+var(--bg);
 color:var(--text);
-font-family:'Inter', sans-serif;
-font-size:16px;
-line-height:1.6;
-transition:background .2s ease, color .2s ease;
+font-family:"DM Sans",system-ui,sans-serif;
+line-height:1.65;
+overflow-x:hidden;
 }
-h1,h2,h3{
-font-family:'Space Grotesk', sans-serif;
-color:var(--navy);
-letter-spacing:-0.01em;
-margin:0;
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+code{
+font-family:"DM Mono",monospace;
+font-size:.82em;
+color:var(--cyan);
+background:rgba(103,232,249,.08);
+padding:2px 6px;
+border-radius:6px;
+border:1px solid rgba(103,232,249,.16);
 }
-a{color:inherit; text-decoration:none;}
-a:focus-visible, button:focus-visible{
-outline:2px solid var(--accent);
-outline-offset:3px;
-border-radius:4px;
-}
-.skip-link{
-position:absolute; left:-9999px; top:auto;
-background:var(--navy); color:var(--bg);
-padding:10px 16px; border-radius:6px; font-size:13px; font-weight:500; z-index:100;
-}
-.skip-link:focus{
-left:16px; top:16px;
-}
-.wrap{max-width:880px; margin:0 auto; padding:0 28px;}
+.wrap{width:min(calc(100% - 44px),var(--max));margin:auto}
+.mono,.eyebrow,.tag,.nav-num,.metric-label{font-family:"DM Mono",monospace}
+.eyebrow{color:var(--lime);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase}
+.muted{color:var(--muted)}
+.soft{color:var(--soft)}
+.section{padding:104px 0;border-top:1px solid var(--line)}
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:38px}
+.section-head h2{font:600 clamp(2rem,4vw,3.2rem)/1.08 "Space Grotesk",sans-serif;letter-spacing:-.045em;margin:12px 0 0}
+.section-head p{max-width:460px;color:var(--muted);margin:0}
 
-/* Nav */
-nav{
-position:sticky; top:0; z-index:50;
-background:var(--nav-bg);
-backdrop-filter:blur(6px);
-border-bottom:1px solid var(--line);
-}
-nav .wrap{
-display:flex; align-items:center; justify-content:space-between;
-padding-top:14px; padding-bottom:14px;
-}
-.brand{display:flex; align-items:center; gap:10px;}
-.brand .mark{
-width:32px; height:32px; background:var(--navy); border-radius:8px;
-display:flex; align-items:center; justify-content:center;
-flex-shrink:0;
-}
-.brand .mark span{
-font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:12px; color:var(--bg);
-}
-.brand .name{font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; color:var(--navy);}
-.navlinks{display:flex; align-items:center; gap:28px; font-size:14px; font-weight:500;}
-.navlinks a{color:var(--muted); transition:color .15s ease; padding:4px 2px;}
-.navlinks a:hover{color:var(--navy);}
-.navlinks a.contact-link{
-color:var(--accent); border:1px solid rgba(37,99,235,0.3);
-padding:6px 14px; border-radius:6px; transition:background .15s ease, color .15s ease;
-}
-.navlinks a.contact-link:hover{background:var(--accent); color:var(--bg);}
-.theme-toggle{
-border:1px solid var(--line);
-background:var(--surface);
-color:var(--text);
-padding:7px 12px;
-border-radius:999px;
-font-size:13px;
-font-weight:600;
-cursor:pointer;
-transition:background .2s ease, color .2s ease, border-color .2s ease;
-}
-.theme-toggle:hover{border-color:var(--accent);}
+/* Top Navigation */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(11,16,32,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center;font:600 1rem "Space Grotesk"}
+.monogram{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(96,165,250,.45);border-radius:12px;color:var(--blue);background:rgba(37,99,235,.12);font:600 .85rem "DM Mono"}
+.navlinks{display:flex;align-items:center;gap:25px;color:var(--muted);font-size:.88rem}
+.navlinks a:hover{color:var(--text)}
+.nav-cta{border:1px solid rgba(96,165,250,.45);border-radius:999px;padding:9px 15px;color:var(--text);transition:.2s}
+.nav-cta:hover{background:rgba(96,165,250,.12);border-color:var(--blue)}
+.menu{display:none;background:none;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px 11px;cursor:pointer}
 
 /* Hero */
-header.hero{
-padding:96px 0 72px;
-border-bottom:1px solid var(--line);
-position:relative;
-overflow:hidden;
-background-color:var(--bg);
-}
-header.hero::before{
-content:"";
-position:absolute;
-inset:0;
-background-image:url('assets/hero-texture.svg');
-background-size:cover;
-background-position:center;
-opacity:var(--hero-overlay-opacity);
-pointer-events:none;
-mix-blend-mode:var(--hero-overlay-blend);
-}
-header.hero > .wrap{position:relative; z-index:1;}
-.hero-layout{display:block;}
-.hero-copy{max-width:640px;}
-.eyebrow{
-font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
-color:var(--accent); font-weight:600; margin-bottom:18px;
-}
-header.hero h1{
-font-size:clamp(28px, 4.5vw, 40px); font-weight:700; line-height:1.22; max-width:640px;
-}
-header.hero .sub{
-margin-top:20px; font-size:16px; color:var(--muted); max-width:560px; line-height:1.65;
-}
-.proof-strip{
-margin-top:36px; display:flex; gap:28px; flex-wrap:wrap;
-}
-.proof-item{
-font-size:13.5px; color:var(--text); border-left:2px solid var(--accent); padding-left:12px; max-width:220px;
-}
-.proof-item strong{display:block; font-family:'Space Grotesk', sans-serif; font-size:14px; color:var(--navy); margin-bottom:2px;}
-.cta{
-display:inline-block; margin-top:40px; background:var(--navy); color:var(--bg);
-font-weight:500; font-size:14px; padding:12px 22px; border-radius:8px;
-transition:background .15s ease, transform .1s ease;
-}
-.cta:hover{background:#1e293b;}
-.cta:active{transform:translateY(1px);}
+.hero{padding:96px 0 88px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:65px;align-items:center}
+.availability{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:rgba(18,29,51,.72);padding:7px 12px;border-radius:999px;color:var(--muted);font-size:.8rem}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 14px var(--lime)}
+h1{font:600 clamp(3rem,6.6vw,5.8rem)/.99 "Space Grotesk",sans-serif;letter-spacing:-.065em;margin:27px 0 24px;max-width:800px}
+h1 .accent{color:var(--blue)}
+.hero-copy{font-size:1.12rem;color:#c1ccdc;max-width:650px}
+.hero-copy strong{color:var(--text);font-weight:600}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;padding:13px 19px;font-weight:600;font-size:.9rem;border:1px solid var(--line);transition:.2s;cursor:pointer}
+.btn-primary{background:var(--blue2);border-color:var(--blue2);color:white;box-shadow:0 10px 30px rgba(37,99,235,.25)}
+.btn-primary:hover{background:#3978ed;transform:translateY(-2px)}
+.btn-ghost:hover{border-color:var(--blue);background:rgba(96,165,250,.08)}
+.hero-note{margin-top:24px;color:var(--soft);font-size:.82rem}
+.hero-card{border:1px solid rgba(96,165,250,.24);background:linear-gradient(145deg,rgba(22,35,59,.96),rgba(13,21,39,.94));border-radius:26px;padding:25px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(37,99,235,.18);filter:blur(50px);right:-90px;top:-90px}
+.terminal-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px;position:relative}
+.terminal-dots{display:flex;gap:6px}
+.terminal-dots i{width:7px;height:7px;border-radius:50%;background:#40516c}
+.terminal-label{font:.7rem "DM Mono";color:var(--soft)}
+.code-line{font:.83rem/2 "DM Mono",monospace;color:#c6d5e9;white-space:nowrap}
+.code-line .key{color:var(--cyan)}
+.code-line .val{color:var(--lime)}
+.code-line .comment{color:#778aa6}
+.terminal-foot{display:flex;justify-content:space-between;gap:12px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:.74rem;color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:65px}
+.metric{padding:19px 20px;border:1px solid var(--line);border-radius:16px;background:rgba(18,29,51,.55)}
+.metric strong{display:block;font:600 1.65rem "Space Grotesk";letter-spacing:-.04em}
+.metric span{color:var(--muted);font-size:.77rem}
 
-/* Section shell */
-section{padding:80px 0; border-bottom:1px solid var(--line);}
-section:last-of-type{border-bottom:none;}
-.section-label{
-font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
-color:var(--muted); font-weight:600; margin-bottom:14px;
-}
-.section-title{font-size:28px; margin-bottom:14px;}
-.section-intro{color:var(--muted); max-width:560px; margin-bottom:52px; font-size:15px;}
+/* Grids & Cards */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(18,29,51,.88),rgba(15,24,43,.78));border-radius:var(--radius);padding:25px;transition:.22s}
+.card:hover{transform:translateY(-4px);border-color:rgba(96,165,250,.4)}
+.card h3{font:600 1.25rem "Space Grotesk";letter-spacing:-.025em;margin:10px 0}
+.card p{color:var(--muted);margin:0}
+.icon-box{width:43px;height:43px;display:grid;place-items:center;border-radius:13px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);color:var(--blue);font:600 .9rem "DM Mono"}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.tag{font-size:.68rem;color:#b8c8df;border:1px solid var(--line);background:rgba(255,255,255,.025);padding:5px 8px;border-radius:7px}
 
-/* Case studies */
-.case-study{
-margin-bottom:40px;
-padding:40px 44px;
-background:var(--surface);
-border:1px solid var(--line);
-border-radius:14px;
-}
-.case-study:last-of-type{margin-bottom:0;}
-.case-tag{
-display:inline-block;
-font-size:11.5px; font-weight:600; color:var(--accent);
-text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;
-background:rgba(37,99,235,0.08); padding:4px 10px; border-radius:5px;
-}
-.case-study h3{font-size:22px; line-height:1.3; margin-bottom:8px;}
-.case-meta{font-size:13px; color:var(--muted); margin-bottom:30px; padding-bottom:22px; border-bottom:1px solid var(--line);}
-.case-block{margin-bottom:26px;}
-.case-block:last-child{margin-bottom:0;}
-.case-block h4{
-font-family:'Space Grotesk', sans-serif; font-size:12.5px; font-weight:600;
-color:var(--navy); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:9px;
-}
-.case-block p{font-size:15px; color:var(--text); max-width:660px;}
-.case-block ul{margin:0; padding-left:18px; font-size:15px; max-width:660px;}
-.case-block li{margin-bottom:6px;}
-.case-block.reliability{
-background:rgba(37,99,235,0.04);
-border-left:3px solid var(--accent);
-padding:18px 22px;
-border-radius:0 8px 8px 0;
-}
-.case-block.diagram-block svg{
-display:block;
-margin-top:4px;
-}
-.placeholder{
-font-size:13.5px; color:var(--muted); font-style:italic;
-border-left:2px solid var(--line); padding-left:12px;
-}
+/* Split & Timeline */
+.split{display:grid;grid-template-columns:.72fr 1.28fr;gap:50px}
+.sticky-note{position:sticky;top:110px;align-self:start}
+.quote{font:500 clamp(1.55rem,3vw,2.35rem)/1.25 "Space Grotesk";letter-spacing:-.04em;margin:15px 0 20px}
+.quote em{color:var(--blue);font-style:normal}
+.timeline{display:grid;gap:14px}
+.timeline-item{display:grid;grid-template-columns:125px 1fr;gap:22px;padding:20px 0;border-bottom:1px solid var(--line)}
+.timeline-date{font:.75rem "DM Mono";color:var(--blue);padding-top:4px}
+.timeline-item h3{margin:0 0 5px;font:600 1.1rem "Space Grotesk"}
+.timeline-item p{margin:0;color:var(--muted)}
 
-/* Internship card */
-.role-card{
-background:var(--surface); border:1px solid var(--line); border-radius:12px;
-padding:28px 30px; margin-top:40px;
-}
-.role-card h3{font-size:19px; margin-bottom:4px;}
-.role-card .case-meta{margin-bottom:16px;}
-.role-card p{font-size:14.5px; color:var(--text); max-width:640px;}
+/* Projects */
+.project{padding:0;overflow:hidden}
+.project-top{padding:25px 25px 17px;display:flex;justify-content:space-between;align-items:start;gap:16px}
+.project-num{font:.75rem "DM Mono";color:var(--blue)}
+.project-body{padding:0 25px 25px}
+.project-body p{color:var(--muted);margin-top:0}
+.project-detail{border-top:1px solid var(--line);margin-top:20px;padding-top:17px;display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.detail-label{font:.68rem "DM Mono";text-transform:uppercase;letter-spacing:.08em;color:var(--soft);display:block;margin-bottom:5px}
+.detail-value{font-size:.84rem;color:#d5deeb}
+.project-feature{grid-column:span 2;border-color:rgba(96,165,250,.36);background:linear-gradient(140deg,rgba(23,45,79,.9),rgba(15,24,43,.92))}
+.project-feature .project-body{display:grid;grid-template-columns:1.1fr .9fr;gap:30px}
+.project-feature .project-detail{border:0;border-left:1px solid var(--line);padding:0 0 0 22px;margin:0;align-content:start}
+.feature-stat{font:600 2.4rem "Space Grotesk";color:var(--lime);letter-spacing:-.05em}
+.feature-stat small{display:block;font:.7rem "DM Mono";color:var(--muted);letter-spacing:0}
 
-/* About */
-.about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px;}
-.about-text p{margin-bottom:18px; font-size:15px; max-width:520px;}
-.about-visual{background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:12px; box-shadow:0 18px 40px rgba(2,6,23,0.16);}
-.about-visual img{display:block; width:100%; height:auto; border-radius:12px;}
-.project-visual{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:10px; margin-top:18px; box-shadow:0 12px 28px rgba(2,6,23,0.08);}
-.project-visual img{display:block; width:100%; height:auto; border-radius:10px;}
-.status-badge{
-display:inline-block; font-size:12.5px; font-weight:600; color:var(--accent);
-background:rgba(37,99,235,0.08); padding:6px 12px; border-radius:6px; margin-bottom:22px;
-}
-.stack-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
-.stack-pill{
-font-size:12.5px; font-weight:500; color:var(--text);
-background:var(--surface); border:1px solid var(--line); padding:6px 12px; border-radius:20px;
-}
-.cert-line{margin-top:22px; font-size:13.5px; color:var(--muted);}
+/* Steps & Principles */
+.steps{counter-reset:step;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.step{position:relative;padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(18,29,51,.62)}
+.step:before{counter-increment:step;content:"0" counter(step);font:.75rem "DM Mono";color:var(--lime)}
+.step h3{font:600 1.1rem "Space Grotesk";margin:14px 0 8px}
+.step p{color:var(--muted);font-size:.91rem;margin:0}
+.step strong{color:var(--text)}
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.principle{padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(18,29,51,.48)}
+.principle strong{display:block;font:600 .95rem "Space Grotesk";margin-bottom:5px}
+.principle span{font-size:.84rem;color:var(--muted)}
 
-/* Contact */
-.contact-row{display:flex; flex-wrap:wrap; gap:16px; margin-top:28px;}
-.contact-btn{
-border:1px solid var(--line); background:var(--surface); padding:12px 20px;
-border-radius:8px; font-size:14px; font-weight:500;
-transition:border-color .15s ease, background .15s ease, color .15s ease;
-}
-.contact-btn:hover{border-color:var(--navy);}
-.contact-btn.primary{background:var(--navy); color:var(--bg); border-color:var(--navy);}
-.contact-btn.primary:hover{background:#1e293b; border-color:#1e293b;}
+/* Stack & Contact */
+.stack-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stack-group h3{font:600 1rem "Space Grotesk";margin:0 0 15px}
+.stack-list{display:flex;flex-wrap:wrap;gap:8px}
+.stack-list span{font-size:.82rem;color:#c6d2e4;border:1px solid var(--line);padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.025)}
+.contact-panel{padding:45px;border-radius:26px;border:1px solid rgba(96,165,250,.3);background:radial-gradient(circle at 90% 10%,rgba(37,99,235,.23),transparent 34%),linear-gradient(145deg,#142440,#10182b);display:flex;justify-content:space-between;gap:35px;align-items:center}
+.contact-panel h2{font:600 clamp(2rem,4vw,3rem)/1.1 "Space Grotesk";letter-spacing:-.045em;margin:10px 0}
+.contact-panel p{color:var(--muted);max-width:570px}
+.footer{padding:28px 0 40px;color:var(--soft);font-size:.78rem}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:23px}
+.socials{display:flex;gap:18px;flex-wrap:wrap}
+.socials a:hover{color:var(--blue)}
 
-footer{
-padding:40px 0; text-align:center; font-size:12.5px; color:var(--muted);
-}
+/* Gemini Chat Drawer */
+.chat-launch{position:fixed;right:24px;bottom:24px;z-index:40;border:0;border-radius:999px;background:var(--blue2);color:white;padding:13px 18px;box-shadow:0 12px 35px rgba(37,99,235,.35);font-weight:600;cursor:pointer;transition:.2s}
+.chat-launch:hover{background:#3978ed;transform:translateY(-2px)}
+.chat-panel{position:fixed;right:24px;bottom:86px;width:min(390px,calc(100vw - 32px));height:520px;max-height:calc(100vh - 120px);z-index:41;background:#101a2d;border:1px solid rgba(96,165,250,.38);border-radius:20px;box-shadow:var(--shadow);display:none;flex-direction:column;overflow:hidden}
+.chat-panel.open{display:flex}
+.chat-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.chat-head strong{font:600 1rem "Space Grotesk"}
+.chat-head small{display:block;color:var(--muted);font-size:.72rem}
+.chat-close{border:1px solid var(--line);background:none;color:var(--text);border-radius:8px;padding:5px 9px;cursor:pointer}
+.chat-messages{padding:16px;flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:90%;padding:11px 13px;border-radius:13px;font-size:.85rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.agent{background:#192943;color:#dce7f5;align-self:flex-start;border:1px solid var(--line)}
+.msg.user{background:#1d4ed8;color:white;align-self:flex-end}
+.chat-form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-form input{min-width:0;flex:1;border:1px solid var(--line);border-radius:11px;background:#0b1324;color:white;padding:12px;outline:none}
+.chat-form input:focus{border-color:var(--blue)}
+.chat-form button{border:0;border-radius:11px;background:var(--blue2);color:white;padding:0 14px;font-weight:600;cursor:pointer}
+.chat-status{padding:0 15px 10px;color:var(--soft);font-size:.68rem}
 
-@media (max-width:640px){
-.navlinks{gap:14px; font-size:13px;}
-.navlinks a.contact-link{padding:5px 10px;}
-header.hero{padding:64px 0 52px;}
-header.hero .sub{font-size:15px;}
-.proof-strip{gap:20px; margin-top:28px;}
-section{padding:56px 0;}
-.section-title{font-size:24px;}
-.case-study{padding:28px 22px;}
-.case-study h3{font-size:19px;}
-.case-block.reliability{padding:14px 16px;}
-.case-block.diagram-block svg{max-width:100%;}
-.about-grid{grid-template-columns:1fr; gap:32px;}
-.contact-row{flex-direction:column; align-items:stretch;}
-.contact-btn{text-align:center;}
+/* Accessibility & Scroll Reveal */
+.skip{position:absolute;left:-9999px;top:10px;background:white;color:#111;padding:10px;z-index:100}
+.skip:focus{left:10px}
+.reveal{opacity:0;transform:translate3d(0,22px,0);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform}
+.reveal.visible{opacity:1;transform:translate3d(0,0,0)}
+.timeline-item.reveal{transition-duration:.7s}
+.section-head.reveal{transform:translate3d(0,16px,0)}
+
+/* Responsive Breakpoints */
+@media(max-width:900px){
+.hero-grid,.split{grid-template-columns:1fr}
+.hero-grid{gap:40px}
+.hero-card{max-width:620px}
+.grid-3,.stack-groups{grid-template-columns:repeat(2,1fr)}
+.project-feature .project-body{grid-template-columns:1fr}
+.project-feature .project-detail{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}
+.section-head{display:block}
+.section-head p{margin-top:15px}
+.sticky-note{position:static}
+}
+@media(max-width:650px){
+.wrap{width:min(calc(100% - 30px),var(--max))}
+.section{padding:75px 0}
+.hero{padding:65px 0 65px}
+.nav{height:66px}
+.menu{display:block}
+.navlinks{display:none;position:absolute;left:15px;right:15px;top:65px;padding:18px;background:#111b30;border:1px solid var(--line);border-radius:15px;flex-direction:column;align-items:stretch;gap:15px}
+.navlinks.open{display:flex}
+.nav-cta{text-align:center}
+.metrics{grid-template-columns:repeat(2,1fr);margin-top:42px}
+.grid-2,.grid-3,.stack-groups,.steps,.principles{grid-template-columns:1fr}
+.project-feature{grid-column:span 1}
+.project-detail{grid-template-columns:1fr}
+.timeline-item{grid-template-columns:1fr;gap:5px}
+.contact-panel{padding:28px;display:block}
+.contact-panel .btn{margin-top:12px}
+.footer-inner{display:block}
+.socials{margin-top:15px}
+.code-line{font-size:.72rem}
+.chat-launch{right:15px;bottom:15px}
+.chat-panel{right:8px;bottom:75px;width:calc(100vw - 16px)}
+}
+@media(prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.reveal{opacity:1;transform:none;transition:none}
+*{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
-
-<nav aria-label="Primary">
-<div class="wrap">
-<div class="brand">
-    <div class="mark"><span>LM</span></div>
-    <div class="name">Lincoln Moki</div>
-</div>
-<div class="navlinks">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
-    <a href="#contact" class="contact-link">Contact</a>
-    <button class="theme-toggle" type="button" aria-pressed="false">☾ Dark</button>
-</div>
-</div>
+<!-- Sticky Header -->
+<header class="topbar">
+<div class="wrap nav">
+<a class="brand" href="#home" aria-label="Lincoln Moki home">
+<span class="monogram">LM</span>
+<span>LINCOLN MOKI<span class="soft"> / ENGINEER</span></span>
+</a>
+<button class="menu" id="menuBtn" aria-expanded="false" aria-controls="navlinks">Menu</button>
+<nav class="navlinks" id="navlinks" aria-label="Main navigation">
+<a href="#expertise">Expertise</a>
+<a href="#experience">Experience</a>
+<a href="#projects">Projects</a>
+<a href="#ai-fluency">AI Fluency</a>
+<a href="#about">About</a>
+<a class="nav-cta" href="#contact">Let's talk ↗</a>
 </nav>
-
-<header class="hero" id="main-content">
-<div class="wrap">
-<div class="hero-layout">
-    <div class="hero-copy">
-    <div class="eyebrow">Backend &amp; AI Engineer</div>
-    <h1>Building reliable systems where data, transactions, APIs, and application state stay consistent under real-world conditions.</h1>
-    <p class="sub">This applies across point-of-sale transactions, e-commerce state, and production-style AI workflows — the same engineering discipline, in different environments.</p>
-
-    <div class="proof-strip">
-        <div class="proof-item">
-        <strong>CPOS System</strong>
-        Live point-of-sale platform supporting retail businesses in Eldoret.
-        </div>
-        <div class="proof-item">
-        <strong>State Synchronization</strong>
-        Resolved frontend/backend consistency issues in an e-commerce cart.
-        </div>
-        <div class="proof-item">
-        <strong>FlyRank Internship</strong>
-        Backend AI Engineer Intern — APIs, integration, production AI workflows.
-        </div>
-    </div>
-
-    <a href="#work" class="cta">See the work</a>
-    </div>
-</div>
 </div>
 </header>
 
-<section id="work">
+<main id="main">
+<!-- Hero Section -->
+<section class="hero" id="home">
 <div class="wrap">
-<div class="section-label">Work</div>
-<h2 class="section-title">Case studies</h2>
-<p class="section-intro">Two production and technical case studies where reliability was the actual engineering problem, not a feature — followed by supporting projects that built the underlying fundamentals, and a summary of current work.</p>
-
-<!-- CASE STUDY 1: CPOS -->
-<div class="case-study">
-    <div class="case-tag">Transactional Systems</div>
-    <h3>CPOS — Transaction Integrity in Live Retail Operations</h3>
-    <div class="case-meta">LancolaTech · Point-of-sale platform · Live production use, Eldoret</div>
-
-    <div class="case-block">
-    <h4>Context</h4>
-    <p>CPOS is a point-of-sale system used by retail businesses to process real transactions — sales, terminal actions, and stored records all had to agree with each other, in production, under real staff usage rather than test conditions.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Engineering Challenge</h4>
-    <p>A terminal action (a sale, a void, a correction) had to be reflected in the backend's transaction record exactly once — never duplicated, never dropped — even when a network interruption, a retry, or a terminal restart occurred mid-operation.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>What I Built</h4>
-    <p>Backend transaction handling and API endpoints that recorded terminal actions against a relational database, with logic to detect and prevent duplicate or partial writes when a request was retried or interrupted before confirmation.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Technical Decisions</h4>
-    <ul>
-        <li>Used PostgreSQL for its transactional guarantees — an interrupted operation needed to either fully commit or fully roll back, with no partial state in between.</li>
-        <li>Kept terminal-facing logic simple and pushed consistency enforcement to the backend, so a slow or unreliable terminal connection couldn't leave the system in an ambiguous state.</li>
-        <li>Traded some implementation simplicity for explicit idempotency checks on write operations — more code up front, fewer reconciliation problems in production.</li>
-    </ul>
-    </div>
-
-    <div class="case-block reliability">
-    <h4>Reliability Considerations</h4>
-    <ul>
-        <li>Network drop mid-transaction: a terminal could show a sale as "processing" with no confirmed backend record — handled by having the backend treat unconfirmed writes as retryable rather than final.</li>
-        <li>Duplicate submission from a retried request: guarded against re-recording the same sale twice.</li>
-        <li>Not every edge case around concurrent terminal access was fully hardened at every stage of the project — ongoing work as usage patterns surfaced new scenarios.</li>
-    </ul>
-    </div>
-
-    <div class="case-block">
-    <h4>Outcome</h4>
-    <p>The system is in active use by retail businesses in Eldoret, processing real transactions as part of daily operations.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Lessons Learned</h4>
-    <p>Working on CPOS shaped how I think about any system where a record has to be trusted after the fact — the discipline of preventing ambiguous state applies well beyond retail, to any environment where an interrupted operation can't be allowed to leave an unclear result.</p>
-    </div>
+<div class="hero-grid">
+<div>
+<div class="availability"><span class="dot"></span> Open to backend, AI &amp; cloud engineering opportunities</div>
+<div class="eyebrow" style="margin-top:25px">Backend AI Engineering · Nairobi, Kenya</div>
+<h1>I build backend systems that stay <span class="accent">correct</span> when everything else goes wrong.</h1>
+<p class="hero-copy">I engineer reliable APIs, data-intensive services and cloud-native applications. I use AI to <strong>multiply engineering productivity</strong> and build grounded AI experiences that turn verified information into useful software.</p>
+<div class="actions">
+    <a class="btn btn-primary" href="#projects">Explore engineering work ↘</a>
+    <a class="btn btn-ghost" href="mailto:mwithiamoki@gmail.com">Contact me ↗</a>
 </div>
-
-<!-- CASE STUDY 2: STATE SYNC -->
-<div class="case-study">
-    <div class="case-tag">Distributed State</div>
-    <h3>E-commerce State Synchronization — Frontend/Backend Consistency Under Failure</h3>
-    <div class="case-meta">E-commerce shopping cart · Frontend/backend consistency</div>
-
-    <div class="case-block">
-    <h4>Context</h4>
-    <p>A shopping cart's displayed state (what the user sees) and its backend state (what's actually stored) have to match. Real user behavior — fast repeated clicks, multiple tabs, slow network responses — creates opportunities for the two to drift apart.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Engineering Challenge</h4>
-    <p>Cart actions (add, remove, change quantity) sent to the backend in quick succession could arrive and be processed out of order, so the last action a user took wasn't necessarily the last one applied to the stored cart.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>What I Built</h4>
-    <p>Debugged and reworked the interaction between frontend cart actions and backend state updates so that the order actions were applied matched the order the user actually performed them in, even under rapid or overlapping requests.</p>
-    </div>
-
-    <div class="case-block diagram-block">
-    <h4>Before / After: Request Ordering</h4>
-    <svg viewBox="0 0 700 300" role="img" aria-labelledby="syncDiagramTitle syncDiagramDesc" style="width:100%; max-width:660px; height:auto;">
-        <title id="syncDiagramTitle">Cart state synchronization before and after the ordering fix</title>
-        <desc id="syncDiagramDesc">Before: rapid add-then-remove actions arrive out of order, so the cart incorrectly still shows the item. After: requests are sequenced by dispatch order, so the cart correctly ends up empty.</desc>
-        <defs>
-        <marker id="diagArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </marker>
-        </defs>
-
-        <text x="0" y="20" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">Before: race condition</text>
-        <rect x="0" y="32" width="200" height="56" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
-        <text x="100" y="54" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">User actions</text>
-        <text x="100" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Add, then remove fast</text>
-
-        <line x1="200" y1="60" x2="220" y2="60" stroke="var(--muted)" stroke-width="1" marker-end="url(#diagArrow)"/>
-
-        <rect x="222" y="32" width="200" height="56" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
-        <text x="322" y="54" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">Arrives reordered</text>
-        <text x="322" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Remove arrives first</text>
-
-        <line x1="422" y1="60" x2="442" y2="60" stroke="var(--muted)" stroke-width="1" marker-end="url(#diagArrow)"/>
-
-        <rect x="444" y="32" width="196" height="56" rx="8" fill="var(--navy)" stroke="var(--navy)" stroke-width="1"/>
-        <text x="542" y="54" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--bg)">Cart shows item</text>
-        <text x="542" y="72" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--bg)" opacity="0.75">Applied last — incorrect</text>
-
-        <text x="0" y="140" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">After: sequenced dispatch</text>
-        <rect x="0" y="152" width="200" height="56" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
-        <text x="100" y="174" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">User actions</text>
-        <text x="100" y="192" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Add, then remove fast</text>
-
-        <line x1="200" y1="180" x2="220" y2="180" stroke="var(--muted)" stroke-width="1" marker-end="url(#diagArrow)"/>
-
-        <rect x="222" y="152" width="200" height="56" rx="8" fill="var(--bg)" stroke="var(--line)" stroke-width="1"/>
-        <text x="322" y="174" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--navy)">Sequenced by order</text>
-        <text x="322" y="192" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Order preserved</text>
-
-        <line x1="422" y1="180" x2="442" y2="180" stroke="var(--muted)" stroke-width="1" marker-end="url(#diagArrow)"/>
-
-        <rect x="444" y="152" width="196" height="56" rx="8" fill="var(--accent)" stroke="var(--accent)" stroke-width="1"/>
-        <text x="542" y="174" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="13" fill="var(--bg)">Cart empty</text>
-        <text x="542" y="192" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="var(--bg)" opacity="0.9">Correct final order</text>
-
-        <text x="0" y="240" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Filled navy = incorrect result from out-of-order arrival</text>
-        <text x="0" y="258" font-family="Inter, sans-serif" font-size="12" fill="var(--muted)">Filled accent blue = correct result once requests are sequenced by dispatch order</text>
-    </svg>
-    </div>
-
-    <div class="case-block">
-    <h4>Technical Decisions</h4>
-    <ul>
-        <li>Investigated whether the fix belonged on the frontend (sequencing requests before they're sent) or backend (resolving order on arrival) — chose to address ordering at the point where requests were dispatched, since that's where the true user-intended order was known.</li>
-        <li>Weighed a full optimistic-UI rework against a smaller, targeted fix to the request sequencing — chose the targeted fix to avoid introducing new failure modes in an already-working UI.</li>
-    </ul>
-    </div>
-
-    <div class="case-block reliability">
-    <h4>Reliability Considerations</h4>
-    <ul>
-        <li>Rapid repeated clicks (add, then quickly remove) could reach the backend in reverse order — this was the core failure mode investigated and addressed.</li>
-        <li>Verified the fix under repeated manual testing with fast, overlapping input rather than relying on a single pass-through test.</li>
-        <li>Multi-tab usage (same cart open in two tabs) was identified as a related but distinct problem, out of scope for this specific fix.</li>
-    </ul>
-    </div>
-
-    <div class="case-block">
-    <h4>Outcome</h4>
-    <p>The cart's displayed state matched backend-stored state under the rapid-input conditions that previously caused drift.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Lessons Learned</h4>
-    <p>This project sharpened how I think about state ownership — deciding which side of a system is responsible for resolving order or truth, rather than letting both sides guess independently.</p>
-    </div>
+<p class="hero-note">Backend engineering is my foundation. AI is both an engineering capability and a force multiplier.</p>
 </div>
-
-<!-- SUPPORTING PROJECT 1: FASTAPI TASK MANAGEMENT API -->
-<div class="case-study">
-    <div class="case-tag">Backend Fundamentals</div>
-    <h3>FastAPI Task Management API</h3>
-    <div class="case-meta">Independent project · CRUD, routing, validation, error handling</div>
-
-    <div class="case-block">
-    <h4>Context</h4>
-    <p>A task management API needs a backend that can reliably create, read, update, and delete tasks while validating input and returning clear errors — the basic contract any client depends on.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Engineering Challenge</h4>
-    <p>Before adding any complexity — a database, AI integration, orchestration — the fundamentals had to be solid: routing, HTTP methods, validation, and application state, each done deliberately rather than assumed.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>What I Built</h4>
-    <p>A FastAPI application exposing REST endpoints for task creation, retrieval, updates, and deletion, using in-memory storage first to isolate backend logic before introducing database persistence.</p>
-    </div>
-
-    <div class="project-visual" aria-label="Swagger UI screenshot for the FastAPI project">
-    <img src="assets/swagger_ui.png" alt="Swagger UI interface for the FastAPI task management API">
-    </div>
-
-    <div class="case-block">
-    <h4>Technical Decisions</h4>
-    <ul>
-        <li>Used Pydantic models for request/response validation, so malformed input is rejected before it reaches business logic.</li>
-        <li>Sequenced complexity deliberately — in-memory storage first, database persistence later — to isolate and understand each layer on its own.</li>
-    </ul>
-    </div>
-
-    <div class="case-block reliability">
-    <h4>Reliability Considerations</h4>
-    <ul>
-        <li>Explicit error responses (404 for missing tasks, 422 for validation failures) rather than generic failure messages.</li>
-        <li>Validation handled at the schema level, so invalid state can't enter the system through a malformed request.</li>
-    </ul>
-    </div>
-
-    <div class="case-block">
-    <h4>Outcome</h4>
-    <p class="placeholder">Quantitative results (response times, request-handling benchmarks) to be added once measured.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Lessons Learned</h4>
-    <p>Getting validation and error handling right at the smallest scale made it clear how much of "backend reliability" is decided before scale ever becomes the problem.</p>
-    </div>
+<div class="hero-card" aria-label="Engineering profile preview">
+<div class="terminal-top">
+    <div class="terminal-dots"><i></i><i></i><i></i></div>
+    <span class="terminal-label">lincoln.profile.json</span>
 </div>
-
-<!-- SUPPORTING PROJECT 2: AI-POWERED BACKEND APPLICATION -->
-<div class="case-study">
-    <div class="case-tag">AI + Backend</div>
-    <h3>AI-Powered Backend Application</h3>
-    <div class="case-meta">Independent project · API integration, data workflows</div>
-
-    <div class="case-block">
-    <h4>Context</h4>
-    <p>An AI-powered feature is only as reliable as the backend feeding it and handling its output — the surrounding system has to be engineered as carefully as the AI call itself.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Engineering Challenge</h4>
-    <p>A slow response, a malformed output, or a failed AI call shouldn't break the application for the user — that failure handling had to be designed explicitly, not assumed away.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>What I Built</h4>
-    <p>A backend service that prepares and sends a request to an AI API, handles the response including failure and timeout cases, and returns a structured result to the client regardless of what happened underneath.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Technical Decisions</h4>
-    <ul>
-        <li>Kept the AI-integrated workflow in a dedicated endpoint, separate from the application's core logic, so a failure there doesn't cascade elsewhere.</li>
-        <li>Returned a consistent, validated response shape to the client whether the AI call succeeded or failed gracefully.</li>
-    </ul>
-    </div>
-
-    <div class="case-block reliability">
-    <h4>Reliability Considerations</h4>
-    <ul>
-        <li>Explicit handling for AI-call failure modes — timeouts, malformed responses, rate limits — rather than letting them surface as unhandled errors.</li>
-        <li>Not every possible AI-provider failure mode has been exercised in production; this is an area for continued hardening.</li>
-    </ul>
-    </div>
-
-    <div class="case-block">
-    <h4>Outcome</h4>
-    <p class="placeholder">Quantitative results (response times, failure-handling rates) to be added once measured.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Lessons Learned</h4>
-    <p>Most of the real engineering work in an "AI-powered" feature is in the backend around the AI call — the same fundamentals from the task management API turned out to matter just as much here.</p>
-    </div>
+<div class="code-line"><span class="key">"role"</span>: <span class="val">"Backend AI Engineering"</span>,</div>
+<div class="code-line"><span class="key">"focus"</span>: [</div>
+<div class="code-line">&nbsp;&nbsp;<span class="val">"reliable_backend_systems"</span>,</div>
+<div class="code-line">&nbsp;&nbsp;<span class="val">"grounded_llm_applications"</span>,</div>
+<div class="code-line">&nbsp;&nbsp;<span class="val">"cloud_native_infrastructure"</span></div>
+<div class="code-line">],</div>
+<div class="code-line"><span class="key">"approach"</span>: <span class="val">"evidence_over_hype"</span></div>
+<div class="terminal-foot"><span>Python · FastAPI · PostgreSQL</span><span>KCNA ✓</span></div>
 </div>
-
-<!-- SUPPORTING PROJECT 3: KUBERNETES / CLOUD-NATIVE DEPLOYMENT -->
-<div class="case-study">
-    <div class="case-tag">Cloud-Native</div>
-    <h3>Kubernetes / Cloud-Native Deployment</h3>
-    <div class="case-meta">Independent project · Containerization, orchestration, deployment</div>
-
-    <div class="case-block">
-    <h4>Context</h4>
-    <p>An application that runs correctly in local development doesn't automatically behave the same way once containerized and deployed under an orchestrator — networking, configuration, restarts, and scaling all introduce behavior local development never has to deal with.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Engineering Challenge</h4>
-    <p>Understanding Kubernetes fundamentals meant actually deploying something and seeing how it behaves when a pod restarts or is rescheduled — not just studying the concepts behind the KCNA certification.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>What I Built</h4>
-    <p>A containerized application deployed to a Kubernetes cluster, with deployment and service manifests defining how the application runs, restarts, and is reached over the network.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Technical Decisions</h4>
-    <ul>
-        <li>Packaged the application as a minimal, explicit Docker image rather than relying on implicit environment state.</li>
-        <li>Handled configuration through Kubernetes-native mechanisms rather than hardcoded values, so the same image behaves correctly across environments.</li>
-    </ul>
-    </div>
-
-    <div class="case-block reliability">
-    <h4>Reliability Considerations</h4>
-    <ul>
-        <li>Verified how the application behaves on pod restart and rescheduling, rather than assuming it matches local-development behavior.</li>
-        <li>Service networking tested to confirm traffic reaches replacement pods correctly after a restart.</li>
-    </ul>
-    </div>
-
-    <div class="case-block">
-    <h4>Outcome</h4>
-    <p class="placeholder">Deployment evidence (pod status, uptime) to be added once captured.</p>
-    </div>
-
-    <div class="case-block">
-    <h4>Lessons Learned</h4>
-    <p>Deploying under Kubernetes surfaced questions that never come up locally — what happens on restart, how configuration should separate from the image — and those questions mattered more than the orchestration tooling itself.</p>
-    </div>
 </div>
-
-<!-- FLYRANK ROLE SUMMARY -->
-<div class="role-card">
-    <h3>FlyRank — Backend AI Engineer Intern</h3>
-    <div class="case-meta">Current · Ongoing</div>
-    <p>Working on backend engineering for AI-integrated systems — APIs, service integration, and production-style workflows connecting AI components to backend infrastructure. This is active, ongoing work; a full case study will follow as the engagement develops.</p>
-</div>
-
-</div>
-</section>
-
-<section id="about">
-<div class="wrap">
-<div class="section-label">About</div>
-<h2 class="section-title">Background</h2>
-
-<div class="about-grid">
-    <div class="about-text">
-    <span class="status-badge">Currently: Backend AI Engineer Intern at FlyRank</span>
-    <p>I work on backend systems where the hard part isn't building a feature — it's making sure the system behaves correctly when things go wrong: a dropped connection, a retried request, a user acting faster than the system expects. CPOS and the e-commerce state-sync project both came from that kind of problem, in different environments.</p>
-    <p>I'm currently deepening my backend and AI engineering work through FlyRank, focused on APIs, service integration, and production-style AI workflows, alongside continued work in cloud-native fundamentals.</p>
-    <p>Working on transactional systems like CPOS surfaced a pattern that shows up in any environment where a record has to be trusted after the fact: a failed or interrupted operation can't be allowed to leave the system in an ambiguous state. That's a general engineering concern, not one specific to retail — the same class of problem shows up wherever systems need to produce a reliable, auditable record of what happened, whether that's a financial transaction, a clinical record, or an enterprise workflow. I'm continuing to build toward environments where that kind of correctness is a first-class requirement, not an afterthought.</p>
-    </div>
-
-    <div class="about-side">
-    <div class="about-visual" aria-label="Photo of Lincoln Moki">
-        <img src="assets/Me.jpeg" alt="Photo of Lincoln Moki">
-    </div>
-    <h4 style="font-family:'Space Grotesk', sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:14px;">Technical Foundation</h4>
-    <div class="stack-list">
-        <span class="stack-pill">Python</span>
-        <span class="stack-pill">FastAPI</span>
-        <span class="stack-pill">Django</span>
-        <span class="stack-pill">Flask</span>
-        <span class="stack-pill">PostgreSQL</span>
-        <span class="stack-pill">REST APIs</span>
-        <span class="stack-pill">Docker</span>
-        <span class="stack-pill">Kubernetes fundamentals</span>
-        <span class="stack-pill">Java</span>
-        <span class="stack-pill">JavaScript</span>
-    </div>
-    <div class="cert-line">KCNA — Kubernetes and Cloud Native Associate</div>
-    </div>
+<div class="metrics">
+<div class="metric"><strong>32</strong><span>billing backend tests passed</span></div>
+<div class="metric"><strong>~400 ms</strong><span>reported AI first-chunk time</span></div>
+<div class="metric"><strong>10 weeks</strong><span>AI Fluency programme</span></div>
+<div class="metric"><strong>KCNA</strong><span>Linux Foundation certification</span></div>
 </div>
 </div>
 </section>
 
-<section id="contact">
+<!-- 01 / Expertise -->
+<section class="section" id="expertise">
 <div class="wrap">
-<div class="section-label">Contact</div>
-<h2 class="section-title">Get in touch</h2>
-<p class="section-intro">Open to backend, AI, cloud, and systems engineering roles. The fastest way to reach me is email.</p>
-<div class="contact-row">
-    <a href="mailto:hello@lincolnmoki.dev" class="contact-btn primary">Email me</a>
-    <a href="#" class="contact-btn">GitHub</a>
-    <a href="#" class="contact-btn">Download CV</a>
+<div class="section-head">
+<div>
+    <div class="eyebrow">01 / Engineering focus</div>
+    <h2>What I build — and how I work.</h2>
+</div>
+<p>I focus on the engineering fundamentals that make software dependable, then use AI and automation to increase the speed and leverage of the development process.</p>
+</div>
+<div class="grid-3">
+<article class="card reveal">
+    <div class="icon-box">API</div>
+    <h3>Backend Engineering</h3>
+    <p>Designing REST APIs, service boundaries, authentication flows, relational data models and asynchronous processing.</p>
+    <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Django</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span></div>
+</article>
+<article class="card reveal">
+    <div class="icon-box">AI</div>
+    <h3>Applied AI &amp; LLM Systems</h3>
+    <p>Integrating LLMs into applications with grounded context, explicit knowledge boundaries, streaming responses and behavioural checks.</p>
+    <div class="tags"><span class="tag">Google Gemini</span><span class="tag">Google GenAI SDK</span><span class="tag">Prompt design</span><span class="tag">Streaming</span></div>
+</article>
+<article class="card reveal">
+    <div class="icon-box">∞</div>
+    <h3>AI-Augmented Engineering</h3>
+    <p>Using AI systematically for research, planning, architecture exploration, implementation, debugging, documentation and workflow automation.</p>
+    <div class="tags"><span class="tag">AI workflow design</span><span class="tag">Prompt engineering</span><span class="tag">GitHub Copilot</span><span class="tag">Code review</span><span class="tag">MCP concepts</span></div>
+</article>
+<article class="card reveal">
+    <div class="icon-box">DB</div>
+    <h3>Data &amp; Reliability</h3>
+    <p>Building tenant-aware data flows, validation boundaries, idempotent operations, caching and durable business state.</p>
+    <div class="tags"><span class="tag">SQLAlchemy</span><span class="tag">Pydantic</span><span class="tag">Alembic</span><span class="tag">SHA-256</span></div>
+</article>
+<article class="card reveal">
+    <div class="icon-box">☁</div>
+    <h3>Cloud-Native Foundations</h3>
+    <p>Working with containers, local reproducible environments, serverless deployment and Kubernetes fundamentals.</p>
+    <div class="tags"><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Vercel</span><span class="tag">GitHub Actions</span><span class="tag">Ubuntu</span></div>
+</article>
+<article class="card reveal">
+    <div class="icon-box">UI</div>
+    <h3>Product Interfaces</h3>
+    <p>Building responsive web interfaces and connecting user interactions to backend services with clear state and feedback.</p>
+    <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">React</span></div>
+</article>
 </div>
 </div>
 </section>
 
-<footer>
-Lincoln Moki — Backend &amp; AI Engineer
+<!-- 02 / Experience -->
+<section class="section" id="experience">
+<div class="wrap">
+<div class="section-head">
+<div>
+    <div class="eyebrow">02 / Experience</div>
+    <h2>Where I’ve applied the work.</h2>
+</div>
+<p>Practical engineering experience across backend development, AI fluency and client-facing software delivery.</p>
+</div>
+<div class="timeline">
+<div class="timeline-item">
+    <div class="timeline-date">COMPLETED</div>
+    <div>
+    <h3>Backend AI Engineering Intern — FlyRank AI</h3>
+    <p>Completed a 10-week AI Fluency programme and Backend AI Engineering work, including an AI usage metering and billing backend. The programme also included building and deploying an interactive portfolio with a grounded Gemini-powered AI representative.</p>
+    <div class="tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Flutterwave</span><span class="tag">Gemini</span></div>
+    </div>
+</div>
+<div class="timeline-item">
+    <div class="timeline-date">COMPANY PROJECTS</div>
+    <div>
+    <h3>Software Development Contributions — Lancola Limited</h3>
+    <p>Contributed to company software projects, including frontend development for CPOS and website development. My CPOS contribution was on the frontend; I do not claim ownership of its backend implementation.</p>
+    <div class="tags"><span class="tag">Lancola Limited</span><span class="tag">CPOS</span><span class="tag">Web development</span><span class="tag">Frontend engineering</span></div>
+    </div>
+</div>
+<div class="timeline-item">
+    <div class="timeline-date">INDEPENDENT PROJECT</div>
+    <div>
+    <h3>Independent Web Development</h3>
+    <p>My independent web-development work is currently represented by one live project: Princeton Dental &amp; Implant Centre. I keep this entry focused on the work delivered rather than implying a larger freelance client portfolio.</p>
+    <div class="tags"><span class="tag">Freelance project</span><span class="tag">Web development</span><span class="tag">Client delivery</span></div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 03 / Selected Engineering Work -->
+<section class="section" id="projects">
+<div class="wrap">
+<div class="section-head">
+<div>
+    <div class="eyebrow">03 / Selected engineering work</div>
+    <h2>Projects with decisions behind them.</h2>
+</div>
+<p>Each project is presented around the problem, the engineering approach and the evidence available — not just a list of technologies.</p>
+</div>
+<div class="grid-2">
+<!-- Project 01 (Fixed tags) -->
+<article class="card project project-feature reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">01 / FLAGSHIP AI PROJECT</div>
+    <h3>Grounded Portfolio AI Representative</h3>
+    </div>
+    <span class="tag">Deployed</span>
+</div>
+<div class="project-body">
+    <div>
+    <p><strong>The problem.</strong> A static portfolio can present information, but it cannot answer follow-up questions from recruiters or explain the context behind projects.</p>
+    <p><strong>What I did.</strong> I built a Gemini-powered agent behind a serverless Python API on Vercel, used a curated backend knowledge file for context, and streamed responses to a JavaScript chat interface. I chose direct context injection rather than adding an unnecessary vector database.</p>
+    <p><strong>What came of it.</strong> The portfolio gained an interactive representative that can answer questions using documented engineering information, with unknown details constrained by its context and instructions.</p>
+    <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Google Gemini</span>
+        <span class="tag">Vercel</span>
+        <span class="tag">ReadableStream</span>
+        <span class="tag">JavaScript</span>
+    </div>
+    </div>
+    <div class="project-detail">
+    <div><span class="detail-label">Grounding strategy</span><span class="detail-value">Direct injection of audited agent-context.json into the system instruction; intentionally no vector database or RAG layer.</span></div>
+    <div><span class="detail-label">Streaming</span><span class="detail-value">Gemini generate_content_stream() with server-side chunk flushing and browser TextDecoder.</span></div>
+    <div><span class="detail-label">Safety checks</span><span class="detail-value">Documented tests for grounded answers, unknown information and prompt-injection attempts.</span></div>
+    <div><span class="detail-label">Reported performance</span><span class="feature-stat">~400 ms<small>first response chunk, report methodology</small></span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 02 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">02 / BACKEND SYSTEMS</div>
+    <h3>AI Usage Metering &amp; Billing Engine</h3>
+    </div>
+    <span class="tag">FlyRank capstone</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> AI platforms need tenant-aware usage records, quota enforcement and subscription state that cannot be trusted to a browser redirect.</p>
+    <p><strong>What I did.</strong> I built a FastAPI service backed by PostgreSQL and Redis, implemented idempotent usage recording and quota checks, and integrated Flutterwave sandbox webhooks so subscription changes depend on verified provider events.</p>
+    <p><strong>What came of it.</strong> The capstone delivered a tested usage-metering and billing backend with documented boundaries: sandbox payments and future production reconciliation/hardening still outstanding.</p>
+    <div class="tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">SQLAlchemy</span><span class="tag">Flutterwave OAuth 2.0</span><span class="tag">Docker</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Reliability</span><span class="detail-value">Webhook event identity and idempotent subscription transitions.</span></div>
+    <div><span class="detail-label">Verification</span><span class="detail-value">32 automated tests passed in ~1.3 seconds.</span></div>
+    <div><span class="detail-label">Payment truth</span><span class="detail-value">Only verified provider events activate subscriptions; redirects are not proof of payment.</span></div>
+    <div><span class="detail-label">Scope</span><span class="detail-value">Flutterwave sandbox; production reconciliation and operational hardening remain future work.</span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 03 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">03 / DATA ENGINEERING</div>
+    <h3>The Polite Scraper</h3>
+    </div>
+    <span class="tag">Data pipeline</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> Repeatedly downloading unchanged catalogue pages wastes requests and makes a small data collection job less efficient.</p>
+    <p><strong>What I did.</strong> I selected a lightweight requests-and-BeautifulSoup approach because the target is server-rendered HTML, then added request delays, timeouts, SHA-256 caching and Pydantic validation.</p>
+    <p><strong>What came of it.</strong> The recorded warm-cache run returned 63 cache hits in 2.82 seconds across 60 catalogue records; this is not presented as a cold-run benchmark.</p>
+    <div class="tags"><span class="tag">Python</span><span class="tag">Requests</span><span class="tag">BeautifulSoup</span><span class="tag">Pydantic</span><span class="tag">SHA-256</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Reported run</span><span class="detail-value">63/63 cache hits; 2.82 seconds total.</span></div>
+    <div><span class="detail-label">Important context</span><span class="detail-value">This was a warm-cache result, not a cold scrape benchmark.</span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 04 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">04 / API DEVELOPMENT</div>
+    <h3>Task Management &amp; Authentication API</h3>
+    </div>
+    <span class="tag">Backend</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> A task API needs more than basic CRUD: data must persist, and protected resources need an authentication boundary.</p>
+    <p><strong>What I did.</strong> I developed the API through iterations from in-memory CRUD to persistent storage and a later FastAPI implementation using PostgreSQL and Supabase JWT authentication.</p>
+    <p><strong>What came of it.</strong> The work demonstrates progression from basic API operations to authenticated, persistent task management. Logout and token-revocation behaviour remains to be verified before stronger security claims.</p>
+    <div class="tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Supabase JWT</span><span class="tag">Docker</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Focus</span><span class="detail-value">API boundaries, persistence, authentication and protected resources.</span></div>
+    <div><span class="detail-label">Documentation note</span><span class="detail-value">Logout and token-revocation semantics should be confirmed against implementation before making stronger security claims.</span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 05 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">05 / SYSTEMS THINKING</div>
+    <h3>E-commerce State Synchronization</h3>
+    </div>
+    <span class="tag">Failure analysis</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> Asynchronous requests can finish out of order, allowing an older response to overwrite state produced by a newer user action.</p>
+    <p><strong>What I did.</strong> I explored request-sequence guards so the application can distinguish the latest request from stale responses instead of treating arrival order as authority.</p>
+    <p><strong>What came of it.</strong> The case study captures a concrete frontend correctness principle. The implementation snippet and reproducible test still need to be attached before claiming verified test evidence.</p>
+    <div class="tags"><span class="tag">JavaScript</span><span class="tag">Async state</span><span class="tag">Race conditions</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Core principle</span><span class="detail-value">Arrival order is not authority to commit.</span></div>
+    <div><span class="detail-label">Evidence status</span><span class="detail-value">Implementation snippet and reproducible test should be added after source verification.</span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 06 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">06 / INDEPENDENT PROJECT</div>
+    <h3>Princeton Dental &amp; Implant Centre</h3>
+    </div>
+    <span class="tag">Live website</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> The practice needed a clear online presence where visitors could understand its services and find relevant information.</p>
+    <p><strong>What I did.</strong> I delivered a responsive website using HTML, CSS and JavaScript, structuring the content around the practice's services and visitor needs.</p>
+    <p><strong>What came of it.</strong> The project resulted in a live website for Princeton Dental &amp; Implant Centre. I avoid unmeasured uptime or performance claims.</p>
+    <div class="tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Responsive design</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Contribution</span><span class="detail-value">Web design and frontend delivery.</span></div>
+    <div><span class="detail-label">Live site</span><span class="detail-value"><a href="https://princetondentalandimplantcenter.com/" target="_blank" rel="noopener">princetondentalandimplantcenter.com ↗</a></span></div>
+    </div>
+</div>
+</article>
+
+<!-- Project 07 -->
+<article class="card project reveal">
+<div class="project-top">
+    <div>
+    <div class="project-num">07 / COMMERCIAL PRODUCT</div>
+    <h3>CPOS — Point of Sale</h3>
+    </div>
+    <span class="tag">Frontend contribution</span>
+</div>
+<div class="project-body">
+    <p><strong>The problem.</strong> A point-of-sale product needs an interface that supports its retail workflows clearly and consistently.</p>
+    <p><strong>What I did.</strong> At Lancola Limited, I contributed to the CPOS frontend. My role was on the interface side; I do not attribute backend services or payment infrastructure to my contribution.</p>
+    <p><strong>What came of it.</strong> My work formed part of the wider commercial CPOS project. I have not published transaction-speed or rollout metrics without verified attribution and methodology.</p>
+    <div class="tags"><span class="tag">Frontend engineering</span><span class="tag">JavaScript</span><span class="tag">Retail workflows</span></div>
+    <div class="project-detail">
+    <div><span class="detail-label">Role boundary</span><span class="detail-value">Frontend contributor; backend implementation belongs to the wider project team.</span></div>
+    <div><span class="detail-label">Outcome claims</span><span class="detail-value">No transaction-speed or deployment metrics published until individual attribution and methodology are verified.</span></div>
+    </div>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 04 / Expanded AI Fluency & Disciplined Engineering -->
+<section class="section" id="ai-fluency">
+<div class="wrap">
+<div class="section-head">
+<div>
+<div class="eyebrow">04 / AI Fluency &amp; Disciplined Engineering</div>
+<h2>Not just using AI. Engineering with clarity, validation and boundaries.</h2>
+</div>
+<p>Combining structured training across GitHub Copilot (Andela &amp; Microsoft), Anthropic Claude Code, and FlyRank’s 10-week AI Fluency programme with hands-on implementation in deployed backend AI systems.</p>
+</div>
+
+<!-- 6 Core AI Fluency Capability Pillars -->
+<div class="grid-3">
+<article class="card reveal">
+<div class="icon-box">01</div>
+<h3>AI-Augmented Software Engineering</h3>
+<p>Applying AI across the SDLC — scaffolding modules, refactoring, modernizing code, generating sample data, translating syntax, and drafting documentation while retaining architectural ownership.</p>
+<div class="tags"><span class="tag">SDLC workflows</span><span class="tag">Inline &amp; Chat IDE</span><span class="tag">CLI assistance</span><span class="tag">Refactoring</span></div>
+</article>
+
+<article class="card reveal">
+<div class="icon-box">02</div>
+<h3>Prompt Engineering &amp; Context Management</h3>
+<p>Crafting structured prompts with explicit intent, constraints, zero-shot vs. few-shot examples, and curated chat history while scoping surrounding file context for relevant outputs.</p>
+<div class="tags"><span class="tag">Zero/Few-shot</span><span class="tag">Context scoping</span><span class="tag">Slash commands</span><span class="tag">Prompt flow</span></div>
+</article>
+
+<article class="card reveal">
+<div class="icon-box">03</div>
+<h3>Responsible AI &amp; Output Validation</h3>
+<p>Treating generative outputs as probabilistic drafts subject to training-data age, bias, and hallucination limits — requiring human review, logic verification, and duplication checks before adoption.</p>
+<div class="tags"><span class="tag">Output auditing</span><span class="tag">Bias &amp; risk mitigation</span><span class="tag">Duplication filter</span><span class="tag">Human verification</span></div>
+</article>
+
+<article class="card reveal">
+<div class="icon-box">04</div>
+<h3>AI-Assisted Testing &amp; Debugging</h3>
+<p>Accelerating unit and integration test generation, edge-case discovery, assertion drafting, and stack-trace triage while relying on deterministic test suites (such as pytest) to verify behavior.</p>
+<div class="tags"><span class="tag">Unit &amp; edge cases</span><span class="tag">Assertion design</span><span class="tag">Debugging triage</span><span class="tag">pytest verification</span></div>
+</article>
+
+<article class="card reveal">
+<div class="icon-box">05</div>
+<h3>Security, Privacy &amp; Performance</h3>
+<p>Understanding content exclusions, secret hygiene, prompt and suggestion telemetry boundaries, vulnerability scanning, and latency or token-window trade-offs across developer tools and APIs.</p>
+<div class="tags"><span class="tag">Content exclusions</span><span class="tag">Data privacy</span><span class="tag">Security review</span><span class="tag">Latency &amp; tokens</span></div>
+</article>
+
+<article class="card reveal">
+<div class="icon-box">06</div>
+<h3>How Coding Assistants Process Context</h3>
+<p>Conceptual understanding of the suggestion lifecycle: context gathering from open files and repository signals, prompt assembly, proxy pre-filtering, LLM token generation, and post-processing filters.</p>
+<div class="tags"><span class="tag">Context pipeline</span><span class="tag">Proxy filtering</span><span class="tag">Context windows</span><span class="tag">Post-processing</span></div>
+</article>
+</div>
+
+<div style="height:38px"></div>
+
+<!-- 3-Part Practical Synthesis + Training vs. Implementation Boundary -->
+<div class="split">
+<div class="sticky-note">
+<div class="eyebrow">Training vs. Implementation</div>
+<p class="quote">AI should amplify engineering judgement — <em>not replace it.</em></p>
+<p class="muted">Enterprise governance capabilities covered in my GitHub Copilot training — such as organization-wide Knowledge Bases, audit log administration, and REST subscription management — are documented as <strong>training knowledge</strong>, distinct from features I have built or administered in production.</p>
+</div>
+<div>
+<h3 style="font:600 1.15rem 'Space Grotesk';margin:0 0 16px">Connecting training to practical engineering</h3>
+<div class="steps">
+    <article class="step reveal">
+    <h3>AI-Augmented Software Engineering</h3>
+    <p><strong>Training &amp; workflow:</strong> GitHub Copilot training (IDE chat, CLI workflows, SDLC use cases, testing) and Anthropic Claude Code training inform how I decompose backend tasks, scaffold modules, and accelerate pytest coverage while keeping human code review mandatory.</p>
+    </article>
+    <article class="step reveal">
+    <h3>Prompt Engineering &amp; Responsible AI</h3>
+    <p><strong>Training &amp; guardrails:</strong> Prompt-crafting principles (zero/few-shot structure, context boundaries) and Responsible AI standards from my Copilot training and FlyRank AI Fluency directly shape how I constrain LLM instructions and audit outputs for accuracy and safety.</p>
+    </article>
+    <article class="step reveal">
+    <h3>Grounded AI Application Development</h3>
+    <p><strong>Implemented in production:</strong> Applied hands-on in my Gemini-powered portfolio agent — injecting an audited JSON knowledge base into the system instruction, streaming responses via Python and <code>ReadableStream</code> on Vercel, and testing unknown-query and prompt-injection boundaries.</p>
+    </article>
+</div>
+
+<div style="height:24px"></div>
+<div class="card reveal">
+    <div class="eyebrow">Evidence boundary</div>
+    <h3>Separating conceptual breadth from shipped systems.</h3>
+    <p>Combining GitHub Copilot training (covering Responsible AI, assistant architecture, prompt engineering, SDLC use cases, test generation, and privacy/context exclusions) with Anthropic Claude Code and FlyRank AI Fluency gives me a disciplined mental model for AI-assisted engineering. Where a capability represents conceptual training rather than shipped project code, this portfolio states that boundary explicitly.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 05 / About & Certifications -->
+<section class="section" id="about">
+<div class="wrap">
+<div class="section-head">
+<div>
+    <div class="eyebrow">05 / About</div>
+    <h2>Engineering with clarity and accountability.</h2>
+</div>
+<p>I care about how systems behave, not just whether a demo works. That means understanding failure modes, choosing proportionate architecture and being precise about what the evidence proves.</p>
+</div>
+<div class="grid-2">
+<div class="card">
+    <div class="eyebrow">Engineering philosophy</div>
+    <p class="quote" style="font-size:1.8rem">Evidence over hype. <em>Correctness over cleverness.</em></p>
+    <p>I prefer clear boundaries, explicit trade-offs and measurable behaviour. AI is part of my workflow, but engineering judgement remains accountable for the result.</p>
+</div>
+<div class="card">
+    <div class="eyebrow">Education</div>
+    <h3>Bachelor of Science in Software Development</h3>
+    <p>Software development foundation supporting my focus on backend systems and applied AI.</p>
+    <div style="height:16px"></div>
+    <p class="muted">Professional training and certifications are listed below.</p>
+</div>
+</div>
+<div style="height:22px"></div>
+<div class="card">
+<div class="eyebrow">Certifications &amp; professional training</div>
+<div class="timeline">
+    <div class="timeline-item"><div class="timeline-date">SEP 2026</div><div><h3>Backend AI Engineering and AI Fluency</h3><p>FlyRank AI</p></div></div>
+    <div class="timeline-item"><div class="timeline-date">AUG 2026</div><div><h3>Claude Code 101 and AI Fluency: Framework &amp; Foundation</h3><p>Anthropic Academy</p></div></div>
+    <div class="timeline-item"><div class="timeline-date">APR 2026</div><div><h3>GitHub Copilot Course</h3><p>Offered by GitHub in partnership with Andela and Microsoft. This training strengthened my understanding of AI-assisted software development, prompt crafting, context management, testing workflows, and responsible AI practices.</p></div></div>
+    <div class="timeline-item"><div class="timeline-date">MAY 2025</div><div><h3>Kubernetes and Cloud Native Associate (KCNA)</h3><p>The Linux Foundation</p></div></div>
+    <div class="timeline-item"><div class="timeline-date">MAY 2025</div><div><h3>Kubernetes and Cloud Native Essentials (LFS250)</h3><p>The Linux Foundation</p></div></div>
+    <div class="timeline-item"><div class="timeline-date">SEP 2022 / NOV 2020</div><div><h3>Software Development Certification</h3><p>Power Learn Project (September 2022) and Moringa School (November 2020)</p></div></div>
+</div>
+</div>
+<div style="height:18px"></div>
+<div class="principles">
+<div class="principle"><strong>Applied</strong><span>Python, FastAPI, PostgreSQL, Redis, Docker, Gemini integration and API development.</span></div>
+<div class="principle"><strong>Working knowledge</strong><span>Kubernetes fundamentals, cloud-native concepts, asynchronous workers and deployment workflows.</span></div>
+<div class="principle"><strong>Learning through delivery</strong><span>AI workflow design, agent concepts, prompt engineering and applied LLM development.</span></div>
+<div class="principle"><strong>Location</strong><span>Nairobi, Kenya · Open to relevant engineering opportunities.</span></div>
+</div>
+<div style="height:35px"></div>
+<h3 style="font:600 1.15rem 'Space Grotesk';margin-bottom:17px">Technology toolkit</h3>
+<div class="stack-groups">
+<div class="card stack-group"><h3>Backend &amp; APIs</h3><div class="stack-list"><span>Python</span><span>FastAPI</span><span>Django</span><span>Flask</span><span>Pydantic</span><span>Pytest</span><span>SQLAlchemy</span></div></div>
+<div class="card stack-group"><h3>Data &amp; Infrastructure</h3><div class="stack-list"><span>PostgreSQL</span><span>Redis</span><span>Docker</span><span>Kubernetes</span><span>Vercel</span><span>Ubuntu</span><span>Alembic</span></div></div>
+<div class="card stack-group"><h3>AI &amp; Interfaces</h3><div class="stack-list"><span>Google Gemini</span><span>Google GenAI SDK</span><span>JavaScript</span><span>HTML5</span><span>CSS3</span><span>React</span><span>ReadableStream</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- 06 / Contact -->
+<section class="section" id="contact">
+<div class="wrap">
+<div class="contact-panel">
+<div>
+    <div class="eyebrow">06 / Contact</div>
+    <h2>Let's build systems that hold up.</h2>
+    <p>I'm open to backend engineering, applied AI and cloud-native opportunities. If you're working on a problem where reliability and thoughtful engineering matter, I'd be glad to connect.</p>
+    <div class="socials">
+    <a href="https://linkedin.com/in/lincolnmoki" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a href="https://github.com/LincolnMoki" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="mailto:mwithiamoki@gmail.com">Email ↗</a>
+    </div>
+</div>
+<a class="btn btn-primary" href="mailto:mwithiamoki@gmail.com">Start a conversation ↗</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="footer">
+<div class="wrap footer-inner">
+<span>© <span id="year"></span> Lincoln Moki. Built with intention.</span>
+<span>Backend AI Engineering · Nairobi, Kenya</span>
+</div>
 </footer>
 
+<!-- Grounded Gemini AI Representative Chat Drawer -->
+<button class="chat-launch" id="chatLaunch" aria-expanded="false" aria-controls="chatPanel">Ask Lincoln AI ↗</button>
+<section class="chat-panel" id="chatPanel" aria-label="Lincoln AI Representative">
+<div class="chat-head">
+<div>
+    <strong>Lincoln AI Representative</strong>
+    <small>Grounded portfolio assistant · Gemini</small>
+</div>
+<button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="msg agent">Hi! I'm Lincoln's AI representative. Ask me about his backend projects, AI Fluency capstone, technical decisions or experience. I'll stay within the documented portfolio information.</div>
+</div>
+<form class="chat-form" id="chatForm">
+<input id="chatInput" autocomplete="off" placeholder="Ask about a project…" aria-label="Your question">
+<button type="submit">Send</button>
+</form>
+<div class="chat-status" id="chatStatus">Connected to the deployed portfolio API when available.</div>
+</section>
+
 <script>
-const toggleButton = document.querySelector('.theme-toggle');
-const savedTheme = localStorage.getItem('portfolio-theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const shouldUseDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+// Utility selector & dynamic copyright year
+const $ = s => document.querySelector(s);
+$("#year").textContent = new Date().getFullYear();
 
-const applyTheme = (dark) => {
-document.body.classList.toggle('dark', dark);
-if (toggleButton) {
-    toggleButton.textContent = dark ? '☀ Light' : '☾ Dark';
-    toggleButton.setAttribute('aria-pressed', dark ? 'true' : 'false');
+// Mobile navigation drawer toggle
+const menuBtn = $("#menuBtn"), nav = $("#navlinks");
+menuBtn.addEventListener("click", () => {
+const open = nav.classList.toggle("open");
+menuBtn.setAttribute("aria-expanded", String(open));
+});
+nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+nav.classList.remove("open");
+menuBtn.setAttribute("aria-expanded", "false");
+}));
+
+// Accessible scroll-reveal animations honoring prefers-reduced-motion
+const motionOK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (motionOK && "IntersectionObserver" in window) {
+document.querySelectorAll(".section-head, .timeline-item, .contact-panel, .about-panel").forEach(el => el.classList.add("reveal"));
+const revealItems = [...document.querySelectorAll(".reveal")];
+revealItems.forEach((el) => {
+const siblings = [...el.parentElement.children].filter(node => node.classList.contains("reveal"));
+const index = siblings.indexOf(el);
+el.style.setProperty("--reveal-delay", `${Math.min(index, 5) * 85}ms`);
+});
+const revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
+if (e.isIntersecting) {
+    e.target.classList.add("visible");
+    revealObserver.unobserve(e.target);
 }
-};
+}), { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
+revealItems.forEach(el => revealObserver.observe(el));
+} else {
+document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+}
 
-applyTheme(shouldUseDark);
+// Grounded Gemini AI Representative Chat Interface
+const panel = $("#chatPanel"), launch = $("#chatLaunch");
+function toggleChat(open) {
+panel.classList.toggle("open", open);
+launch.setAttribute("aria-expanded", String(open));
+if (open) $("#chatInput").focus();
+}
+launch.addEventListener("click", () => toggleChat(!panel.classList.contains("open")));
+$("#chatClose").addEventListener("click", () => toggleChat(false));
 
-toggleButton?.addEventListener('click', () => {
-const dark = !document.body.classList.contains('dark');
-localStorage.setItem('portfolio-theme', dark ? 'dark' : 'light');
-applyTheme(dark);
+function addMessage(text, who) {
+const el = document.createElement("div");
+el.className = "msg " + who;
+el.textContent = text;
+$("#chatMessages").appendChild(el);
+$("#chatMessages").scrollTop = $("#chatMessages").scrollHeight;
+return el;
+}
+
+$("#chatForm").addEventListener("submit", async e => {
+e.preventDefault();
+const input = $("#chatInput"), question = input.value.trim();
+if (!question) return;
+input.value = "";
+addMessage(question, "user");
+const reply = addMessage("", "agent");
+$("#chatStatus").textContent = "Thinking…";
+
+try {
+const response = await fetch("https://my-portfolio-lincoln13.vercel.app/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: question })
+});
+if (!response.ok) throw new Error("The assistant service returned HTTP " + response.status);
+if (!response.body) throw new Error("Streaming is not available in this response.");
+
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
+let received = false;
+
+while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    if (chunk) {
+    reply.textContent += chunk;
+    received = true;
+    $("#chatMessages").scrollTop = $("#chatMessages").scrollHeight;
+    }
+}
+const tail = decoder.decode();
+if (tail) reply.textContent += tail;
+if (!received && !reply.textContent) {
+    reply.textContent = "I couldn't produce a response. Please try again.";
+}
+$("#chatStatus").textContent = "Response received from Lincoln's deployed AI representative.";
+} catch (err) {
+reply.textContent = "I couldn't reach the live AI service just now. You can still explore the documented projects on this page, or contact Lincoln directly at mwithiamoki@gmail.com.";
+$("#chatStatus").textContent = "Assistant connection unavailable: " + err.message;
+}
 });
 </script>
-
 </body>
 </html>
