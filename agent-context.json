@@ -1,32 +1,171 @@
-{
-"developer_profile": {
-"name": "Lincoln Moki",
-"role": "Backend & AI Engineer",
-"location": "Nairobi, Kenya",
-"core_claim": "I build backend systems that stay correct when everything else goes wrong.",
-"contact": {
+
+    {
+    "developer_profile": {
+    "name": "Lincoln Moki",
+    "role": "Backend & AI Engineer",
+    "location": "Nairobi, Kenya",
+    "bio": "Backend and AI engineer focused on building reliable backend systems, grounded AI applications, and services that preserve data consistency under failure.",
+    "core_claim": "I build backend systems that stay correct when everything else goes wrong.",
+    "contact": {
     "email": "mwithiamoki@gmail.com",
     "github": "https://github.com/RonnyLincoln",
     "linkedin": "https://www.linkedin.com/in/lincoln-moki",
     "portfolio_site": "https://lincolnmoki.netlify.app/"
-},
-"certifications": [
+    },
+    "certifications": [
     {
     "name": "Kubernetes and Cloud Native Associate (KCNA)",
     "issuer": "Cloud Native Computing Foundation (CNCF)",
     "focus": "Cloud-native architecture, declarative configuration, container orchestration, and runtime workload management."
     }
-]
-},
-"technical_toolkit": {
-"languages": ["Python", "Java", "JavaScript", "SQL"],
-"backend_frameworks": ["FastAPI", "Django", "Flask"],
-"databases_persistence": ["PostgreSQL", "SQLite", "Pydantic Schema Validation"],
-"infrastructure_devops": ["Docker", "Docker Compose", "Kubernetes", "AWS", "GitHub Actions"],
-"apis_auth": ["REST APIs", "Supabase JWT", "Bearer Tokens", "OAuth2 flows"]
-},
-"case_studies": [
-{
+    ]
+    },
+    "technical_toolkit": {
+    "languages": [
+    "Python",
+    "Java",
+    "JavaScript",
+    "SQL"
+    ],
+    "backend_frameworks": [
+    "FastAPI",
+    "Django",
+    "Flask"
+    ],
+    "databases_persistence": [
+    "PostgreSQL",
+    "SQLite",
+    "Pydantic Schema Validation"
+    ],
+    "infrastructure_devops": [
+    "Docker",
+    "Docker Compose",
+    "Kubernetes",
+    "AWS",
+    "GitHub Actions",
+    "Vercel"
+    ],
+    "apis_auth": [
+    "REST APIs",
+    "Supabase JWT",
+    "Bearer Tokens",
+    "OAuth2 flows"
+    ],
+    "ai_engineering": [
+    "Google Gemini",
+    "GitHub Copilot",
+    "Claude Code",
+    "Prompt Engineering",
+    "Grounded AI Agents",
+    "Context Engineering",
+    "AI-Assisted Software Development",
+    "LLM Output Validation",
+    "Streaming AI Responses"
+    ]
+    },
+    "ai_fluency": {
+    "overview": "Applying AI tools and engineering principles to improve software development workflows and build reliable AI-powered applications.",
+    "areas": [
+    {
+    "name": "AI-Augmented Software Engineering",
+    "tools": [
+        "GitHub Copilot",
+        "Claude Code"
+    ],
+    "capabilities": [
+        "AI-assisted code generation and implementation",
+        "Understanding unfamiliar codebases and frameworks",
+        "Debugging and refactoring assistance",
+        "Technical documentation generation",
+        "Test generation and edge-case identification",
+        "Support across the software development lifecycle"
+    ]
+    },
+    {
+    "name": "Prompt Engineering and Responsible AI",
+    "topics": [
+        "Structured prompt construction",
+        "Context selection and prompt refinement",
+        "Zero-shot and few-shot prompting",
+        "Output validation and hallucination awareness",
+        "AI limitations and responsible usage",
+        "Bias, fairness, transparency, and ethical considerations",
+        "Privacy, security, and context exclusion",
+        "Understanding AI data handling and context boundaries"
+    ]
+    },
+    {
+    "name": "Grounded AI Application Development",
+    "capabilities": [
+        "Building AI agents with curated knowledge sources",
+        "Direct context injection",
+        "System instruction construction",
+        "Grounded response generation",
+        "Handling unknown or undocumented information",
+        "Prompt-injection awareness",
+        "Streaming model responses through backend APIs"
+    ],
+    "implementation_reference": "Grounded Portfolio AI Representative"
+    }
+    ],
+    "learning": [
+    {
+    "name": "Backend AI Engineering and AI Fluency",
+    "provider": "FlyRank AI",
+    "period": "September 2026"
+    },
+    {
+    "name": "Claude Code 101 and AI Fluency: Framework & Foundation",
+    "provider": "Anthropic Academy",
+    "period": "August 2026"
+    },
+    {
+    "name": "GitHub Copilot Course",
+    "provider": "GitHub in partnership with Andela and Microsoft",
+    "period": "April 2026",
+    "focus": "AI-assisted development, Copilot features, prompt engineering, responsible AI, testing, privacy, and context management."
+    }
+    ]
+    },
+    "case_studies": [
+    {
+    "id": "grounded-portfolio-ai",
+    "title": "Grounded Portfolio AI Representative",
+    "type": "Flagship AI Engineering Project",
+    "status": "Deployed",
+    "stack": [
+    "Python",
+    "Google Gemini",
+    "Vercel",
+    "ReadableStream",
+    "JavaScript"
+    ],
+    "architecture": {
+    "backend": "Serverless Python API deployed on Vercel.",
+    "model": "Google Gemini",
+    "knowledge_source": "Curated agent-context.json knowledge base.",
+    "context_strategy": "Direct injection of structured knowledge into build_system_instruction().",
+    "retrieval_strategy": "Direct context injection without a vector database or RAG layer.",
+    "response_delivery": "Streaming model responses through the serverless API to a JavaScript chat interface."
+    },
+    "details": {
+    "context": "A static portfolio can present professional information but cannot independently answer detailed follow-up questions about experience, projects, engineering decisions, and technical capabilities.",
+    "engineering_challenge": "Build a personal AI representative that can answer recruiter questions using documented information without inventing experience, project details, or technical achievements.",
+    "what_i_built": "A Gemini-powered AI agent connected to a serverless Python backend, a curated JSON knowledge base, and a streaming JavaScript chat interface.",
+    "technical_decisions": "Used structured JSON as a compact source of truth and injected its contents directly into the system instruction. Avoided unnecessary vector database infrastructure because the curated knowledge base could be supplied directly.",
+    "grounding_strategy": "The agent uses documented identity, technical skills, experience, project details, and contact information. Its knowledge boundaries instruct it not to invent missing information.",
+    "streaming_implementation": "Uses Gemini generate_content_stream(), server-side chunk flushing, and browser-side TextDecoder processing.",
+    "security_considerations": "Keeps model credentials on the server side and uses explicit grounding instructions to reduce unsupported responses.",
+    "validation_focus": [
+        "Grounded answers based on documented facts",
+        "Handling unknown or undocumented information",
+        "Awareness of prompt-injection attempts"
+    ],
+    "reported_performance": "Approximately 400 ms to the first response chunk, as reported in project measurements. This is an observed measurement, not a guaranteed service-level objective.",
+    "lessons_learned": "A useful AI agent needs more than a capable language model. Curated context, explicit knowledge boundaries, and controlled response delivery are essential to making its answers dependable."
+    }
+    },
+    {
     "id": "cpos-system",
     "title": "CPOS System",
     "type": "Production Work",
@@ -34,158 +173,212 @@
     "organization": "Lancola Ltd",
     "location": "Eldoret, Kenya",
     "period": "May 2024 – August 2024",
-    "stack": ["Python", "PostgreSQL", "REST APIs"],
+    "stack": [
+    "Python",
+    "PostgreSQL",
+    "REST APIs"
+    ],
     "specifications": {
     "target_environment": "10 Retail Businesses",
-    "verified_metrics": "25% faster transaction processing (CV-confirmed)",
+    "reported_metric": "25% faster transaction processing (CV-confirmed)",
     "primary_constraint": "Data consistency at checkout boundary"
     },
     "details": {
-    "context": "Retail point-of-sale system serving 10 active businesses where transaction latency and operational stability impacted checkout workflows.",
-    "engineering_challenge": "Accelerate transaction processing speed without compromising financial or inventory data consistency.",
-    "what_i_built": "Backend enhancements for core transaction execution and business logic routines utilized by retail merchants.",
-    "technical_decisions": "Maintained linear, explicit execution paths and treated input validation as an architectural contract at service boundaries.",
-    "reliability_considerations": "Handled malformed payloads, incomplete inputs, and race conditions to prevent ambiguous financial states.",
-    "outcome": "Supported 10 retail businesses with 25% faster confirmed transaction processing speed.",
-    "lessons_learned": "Performance optimizations are only viable if the underlying execution path remains deterministic and testable."
+    "context": "Retail point-of-sale system serving 10 businesses where transaction latency and operational stability affected checkout workflows.",
+    "engineering_challenge": "Support reliable transaction workflows while maintaining financial and inventory data consistency.",
+    "what_i_built": "Contributed to the CPOS system, with the portfolio's experience description limited to the verified scope of my actual contribution.",
+    "technical_decisions": "Prioritized explicit execution paths and input validation at service boundaries.",
+    "reliability_considerations": "Data consistency and predictable transaction behavior were central engineering concerns.",
+    "outcome": "The supplied project record reports 10 retail businesses and 25% faster transaction processing.",
+    "lessons_learned": "Performance improvements are only valuable when the underlying transaction execution remains consistent and predictable."
     }
-},
-{
+    },
+    {
     "id": "e-commerce-state-sync",
     "title": "E-commerce State Synchronization",
     "type": "Failure Analysis",
     "role": "Independent Engineer",
-    "stack": ["JavaScript", "REST APIs", "Client State"],
+    "stack": [
+    "JavaScript",
+    "REST APIs",
+    "Client State"
+    ],
     "specifications": {
     "defect_type": "Out-of-order asynchronous network responses",
     "guarding_mechanism": "Request Authority Sequence Guard",
     "primary_constraint": "Client state mutation integrity"
     },
     "details": {
-    "context": "E-commerce client issuing rapid concurrent HTTP requests during active user UI interaction.",
-    "engineering_challenge": "Out-of-order network responses arriving late caused older data to overwrite newer client state.",
-    "what_i_built": "A request-ordering guard evaluating response freshness against sequential request counters before state mutations commit.",
-    "technical_decisions": "Decoupled network arrival timing from state mutation authority. Requests out of order are rejected as stale.",
-    "reliability_considerations": "Network delays are treated as expected runtime events rather than unexpected system errors.",
-    "outcome": "Eliminated state corruption caused by race conditions. Quantitative metrics pending production log evaluation.",
-    "lessons_learned": "Asynchronous state correctness requires an explicit sequence authority rather than assuming response order mirrors user intent."
+    "context": "An e-commerce client issuing rapid concurrent HTTP requests during active user interaction.",
+    "engineering_challenge": "Late-arriving responses could overwrite newer client state with outdated information.",
+    "what_i_built": "A request-ordering guard that compares response freshness against sequential request counters before allowing state mutations.",
+    "technical_decisions": "Separated network arrival timing from state mutation authority and rejected stale responses.",
+    "reliability_considerations": "Treated network delays and out-of-order responses as expected runtime conditions.",
+    "outcome": "Addressed the state corruption scenario caused by out-of-order responses. Quantitative production metrics remain unmeasured.",
+    "lessons_learned": "Asynchronous state correctness requires explicit authority over which response is allowed to commit."
     }
-},
-{
+    },
+    {
     "id": "freelance-software-engineering",
     "title": "Freelance Software Engineering",
     "type": "Client Delivery",
     "role": "Self-Employed",
     "period": "December 2024 – June 2026",
-    "stack": ["Django", "FastAPI", "PostgreSQL", "Docker"],
+    "stack": [
+    "Django",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker"
+    ],
     "specifications": {
     "scope": "6+ Delivered Applications & Microservices",
     "operational_boundary": "API Contracts & Containerized Runtimes"
     },
     "details": {
-    "context": "Independent technical delivery of multiple client services across APIs, relational storage, and containerized deployments.",
-    "engineering_challenge": "Translate varied business requirements into maintainable backend service boundaries with predictable data contracts.",
-    "what_i_built": "Backend microservices, relational database schemas, and REST endpoints using Django, FastAPI, and PostgreSQL.",
-    "technical_decisions": "Applied strict schema boundary checks, separated environment configs, and containerized runtime environments with Docker.",
-    "reliability_considerations": "Enforced error validation at API entry points and managed relational database migrations as critical deployment operations.",
-    "outcome": "Successfully delivered 6+ production apps and microservices to client specifications.",
-    "lessons_learned": "Even small services require strict API contracts to prevent operational failures when dependencies evolve."
+    "context": "Independent technical delivery of client services involving APIs, relational storage, and containerized deployments.",
+    "engineering_challenge": "Translate business requirements into maintainable backend services with predictable data contracts.",
+    "what_i_built": "Backend services, relational database schemas, and REST endpoints using Django, FastAPI, and PostgreSQL.",
+    "technical_decisions": "Applied schema validation, separated environment configuration, and used Docker for runtime consistency.",
+    "reliability_considerations": "Focused on API input validation, predictable error handling, and database migration discipline.",
+    "outcome": "The supplied project record reports 6+ delivered applications and microservices.",
+    "lessons_learned": "Even small services require explicit API contracts to remain dependable as their dependencies evolve."
     }
-},
-{
+    },
+    {
     "id": "polite-scraper",
     "title": "Resilient Data Ingestion Pipeline (The Polite Scraper)",
     "type": "Ingestion Engine",
     "repository": "https://github.com/LincolnMoki/The-polite-scraper.git",
-    "stack": ["Python", "BeautifulSoup4", "Pydantic", "Requests"],
+    "stack": [
+    "Python",
+    "BeautifulSoup4",
+    "Pydantic",
+    "Requests"
+    ],
     "specifications": {
     "cache_strategy": "SHA-256 Content-Addressable Local Cache",
     "throttling_rules": "0.6s Request Delay / 5s Network Timeout",
     "validation_engine": "Pydantic Schema & ISO-8601 UTC Time"
     },
     "details": {
-    "context": "Fault-tolerant web crawler built to extract, clean, and structure catalog data from HTML sources without overloading remote hosts.",
-    "engineering_challenge": "Prevent duplicate network requests on pipeline re-runs while enforcing strict rate limits and output schema validity.",
-    "what_i_built": "An ETL pipeline featuring local SHA-256 caching, automated request delays, network timeout bounds, and Pydantic validation.",
-    "technical_decisions": "Used lightweight HTML parsing over resource-heavy browser automation; standardized prices to float and timestamps to ISO-8601 UTC.",
-    "reliability_considerations": "Cache hits bypass remote network calls completely (63/63 cache hits verified on re-execution runs).",
-    "outcome": "Processed 60 records across 3 pages in 2.82s with 100% cache efficiency on re-runs.",
-    "lessons_learned": "External HTTP sources must be treated as untrusted; data cleaning and typing must occur immediately at the boundary."
+    "context": "Fault-tolerant web crawler designed to extract, clean, and structure catalog data from HTML sources while respecting remote hosts.",
+    "engineering_challenge": "Avoid unnecessary repeated network requests while enforcing request limits and validating extracted data.",
+    "what_i_built": "An ETL pipeline featuring local SHA-256 caching, request delays, network timeout bounds, and Pydantic validation.",
+    "technical_decisions": "Used lightweight HTML parsing instead of resource-heavy browser automation and standardized prices and timestamps.",
+    "reliability_considerations": "Cached content bypasses remote network calls on subsequent executions.",
+    "outcome": "Processed 60 records across 3 pages in 2.82 seconds, with 63 out of 63 cache hits on the reported re-execution.",
+    "lessons_learned": "External HTTP sources must be treated as untrusted, and data validation should happen immediately at the ingestion boundary."
     }
-},
-{
+    },
+    {
     "id": "crud-auth-api",
     "title": "Containerized & Authenticated Task Service",
     "type": "Secure REST API",
     "repository": "https://github.com/LincolnMoki/CRUD-API.git",
-    "stack": ["FastAPI", "PostgreSQL", "Supabase JWT", "Docker Compose"],
+    "stack": [
+    "FastAPI",
+    "PostgreSQL",
+    "Supabase JWT",
+    "Docker Compose"
+    ],
     "specifications": {
     "auth_provider": "Supabase JWT / Bearer Token Authorization",
     "deployment_boundary": "Docker Compose Multi-Container Orchestration",
     "error_domain": "Explicit HTTP Status Codes (401, 404, 422)"
     },
     "details": {
-    "context": "Multi-tier REST API evolution migrating from in-memory/SQLite prototypes to production PostgreSQL with JWT security.",
-    "engineering_challenge": "Enforce strict session isolation and reproducible local-to-production deployment runtimes.",
-    "what_i_built": "FastAPI service with Supabase JWT validation, Bearer token session guards, explicit logout routes, and multi-container Docker environments.",
-    "technical_decisions": "Decoupled configuration into environment variables and orchestrated API and database tiers via Docker Compose.",
-    "reliability_considerations": "Pre-logic Pydantic validation blocks malformed inputs; edge errors explicitly return 401 Unauthorized or 404 Not Found.",
-    "outcome": "Built a production-ready containerized service stack with zero-friction onboarding and verified auth flows.",
-    "lessons_learned": "Session revocation and error domains require the same engineering rigor as successful execution routes."
+    "context": "A multi-stage REST API project evolving from in-memory and SQLite prototypes to PostgreSQL persistence and JWT authentication.",
+    "engineering_challenge": "Implement authentication boundaries and reproducible application and database environments.",
+    "what_i_built": "A FastAPI service with Supabase JWT validation, Bearer token authorization, and a multi-container Docker environment.",
+    "technical_decisions": "Separated configuration into environment variables and orchestrated API and database services using Docker Compose.",
+    "reliability_considerations": "Used Pydantic validation and explicit HTTP error responses for invalid requests and unauthorized access.",
+    "outcome": "Built a containerized authenticated task service with documented authentication flows.",
+    "lessons_learned": "Authentication, session behavior, and error handling need deliberate design rather than being treated as secondary implementation details."
     }
-},
-{
+    },
+    {
     "id": "princeton-dental",
     "title": "Princeton Dental & Implant Centre",
     "type": "Production Client Site",
     "live_url": "https://princetondentalandimplantcenter.com/",
-    "stack": ["JavaScript", "REST APIs", "HTML/CSS"],
-    "specifications": {
-    "domain": "princetondentalandimplantcenter.com",
-    "core_workflow": "Patient Acquisition & Booking Pipeline",
-    "engineering_focus": "Input Validation & Payload Delivery"
-    },
+    "stack": [
+    "JavaScript",
+    "HTML",
+    "CSS"
+    ],
     "details": {
-    "context": "Production web platform built for a medical facility to present dental services and capture patient inquiries.",
-    "engineering_challenge": "Maintain high site uptime and validate appointment form payloads to prevent lost or malformed customer submissions.",
-    "what_i_built": "Responsive commercial web interface integrated with client-side form payload validation and booking endpoints.",
-    "technical_decisions": "Sanitized form payloads before submission dispatch, maintaining a lightweight dependency footprint.",
-    "reliability_considerations": "Form boundaries enforce complete data inputs to guarantee booking notifications arrive correctly formatted.",
-    "outcome": "Deployed live site actively supporting client acquisition and commercial healthcare operations.",
-    "lessons_learned": "Client-facing software reliability depends directly on predictable form submission logic."
+    "context": "A live website built independently for a dental and implant centre to present services and provide a channel for patient inquiries.",
+    "engineering_challenge": "Create a responsive and accessible client-facing website with predictable inquiry form interactions.",
+    "what_i_built": "A responsive commercial website for Princeton Dental & Implant Centre.",
+    "technical_decisions": "Used a lightweight frontend implementation with JavaScript, HTML, and CSS.",
+    "reliability_considerations": "Focused on clear form interactions and appropriate client-side input handling.",
+    "outcome": "Deployed live client website.",
+    "lessons_learned": "Reliable client-facing experiences depend on clear user flows and predictable input handling."
     }
-},
-{
+    },
+    {
     "id": "snake-game-lab",
     "title": "AI-Generated Snake Game",
     "type": "Lab / Rapid Prototyping",
     "live_url": "https://snakedg.netlify.app/",
-    "stack": ["JavaScript", "Canvas API", "LLM Prompting"],
+    "stack": [
+    "JavaScript",
+    "Canvas API",
+    "LLM Prompting"
+    ],
     "specifications": {
     "experiment_type": "LLM Vibe Coding & Code Generation Benchmarking",
     "evaluation_subject": "State Machine & Frame Render Loop Reliability"
     },
     "details": {
-    "context": "Experimental side project generated entirely via targeted LLM prompts to test state management capabilities of modern AI models.",
-    "engineering_challenge": "Identify exact boundary conditions where LLM-generated code breaks in state-machine render loops.",
-    "what_i_built": "Browser Canvas game with collision detection, score state evaluation, and asynchronous game ticks generated via structured prompts.",
-    "technical_decisions": "Constrained generated outputs to vanilla JavaScript and HTML5 Canvas with zero external frameworks.",
-    "reliability_considerations": "State bounds required manual review to prevent frame collision race conditions and tick timing drift.",
-    "outcome": "Deployed operational game prototype while establishing clear failure-mode profiles for LLM code synthesis.",
-    "lessons_learned": "AI tools generate rapid structural boilerplate, but human engineers remain necessary to enforce strict state invariants."
+    "context": "An experimental side project generated through targeted LLM prompts to explore AI-assisted code generation.",
+    "engineering_challenge": "Evaluate boundary conditions where generated code can fail in state-machine and rendering workflows.",
+    "what_i_built": "A browser-based Canvas game featuring collision detection, score evaluation, and game-loop updates.",
+    "technical_decisions": "Constrained implementation to vanilla JavaScript and HTML5 Canvas without external frameworks.",
+    "reliability_considerations": "Reviewed generated state transitions and boundary conditions to identify possible collision and timing issues.",
+    "outcome": "Deployed an operational game prototype.",
+    "lessons_learned": "AI can accelerate implementation, but generated code still requires engineering review to preserve state invariants."
     }
-},
-{
+    },
+    {
     "id": "flyrank-role",
     "title": "Backend AI Engineer Intern",
-    "type": "Active Internship",
+    "type": "Internship",
     "organization": "FlyRank AI",
     "period": "June 2026 – Present",
     "status": "ONGOING",
     "details": {
-    "context": "Active backend engineering role focusing on AI integrations and backend service workflows.",
-    "note": "Work is ongoing. Metrics and architectural breakdowns will be documented upon project conclusion."
+    "context": "Backend AI Engineering work focused on backend services, AI integrations, and practical AI-assisted engineering workflows.",
+    "focus": [
+        "Backend service development",
+        "AI integration workflows",
+        "Grounded AI application design",
+        "Prompt engineering and AI fluency",
+        "Reliable API development"
+    ],
+    "note": "Project-specific metrics and detailed architecture should only be added when supported by documented project evidence."
     }
-}
-]
-}
+    }
+    ],
+    "agent_behavior": {
+    "purpose": "Represent Lincoln Moki professionally and answer questions about his documented background, engineering experience, projects, skills, and contact information.",
+    "knowledge_source": "Curated agent-context.json",
+    "grounding_rules": [
+    "Use the supplied knowledge base as the source of truth.",
+    "Do not invent projects, employers, certifications, metrics, responsibilities, or technical skills.",
+    "Distinguish reported measurements from independently verified production metrics.",
+    "If a detail is not documented, explicitly state that the information is unavailable.",
+    "Do not present learning topics as implemented production capabilities unless a project demonstrates them.",
+    "Do not claim that a project uses RAG or vector search when its architecture uses direct context injection.",
+    "Keep responses relevant to the question and avoid unnecessarily repeating the entire professional profile."
+    ],
+    "response_style": [
+    "Professional",
+    "Technically precise",
+    "Concise but informative",
+    "Evidence-based",
+    "Transparent about limitations"
+    ],
+    "contact_fallback": "For inquiries that require direct confirmation, provide Lincoln's documented email address."
+    }
+    }
